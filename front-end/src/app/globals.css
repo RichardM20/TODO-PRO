@@ -13,6 +13,20 @@
   }
 }
 
+.ql-toolbar,
+.ql-container {
+  border: none !important;
+}
+
+.ql-toolbar {
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.ql-editor {
+  min-height: 16rem;
+}
+
 body {
   font-family: var(--font-inter);
 }

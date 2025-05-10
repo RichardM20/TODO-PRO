@@ -2,12 +2,15 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
 import { IAuthFormProps } from "@auth-types/form.type";
+import LoadingButton from "@shared/components/buttons/LoadingButton";
 import InputField from "@shared/components/inputs/FieldForm";
 import { emailRegex } from "@shared/utils/validEmail";
-import LoadingButton from "../../../../shared/components/buttons/LoadingButton";
+import { useRouter } from "next/navigation";
+import ErrorContainer from "../../../../shared/components/ErrorContainer";
 import AuthBottomLink from "./AuthBottomLink";
 
 const AuthForm = (props: IAuthFormProps) => {
+  const router = useRouter();
   const [emailInvalid, setEmailInvalid] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -31,6 +34,7 @@ const AuthForm = (props: IAuthFormProps) => {
     }
 
     await props.onSubmit(formData);
+    router.push("/dashboard");
   };
 
   return (
@@ -71,12 +75,11 @@ const AuthForm = (props: IAuthFormProps) => {
             />
 
             {(props.error || emailInvalid) && (
-              <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800">
-                {emailInvalid || props.error}
-              </div>
+              <ErrorContainer error={props.error || emailInvalid} />
             )}
 
             <LoadingButton
+              fullWidth={true}
               buttonText={props.buttonText}
               isLoading={props.isLoading}
               buttonTextLoading={props.buttonTextLoading}

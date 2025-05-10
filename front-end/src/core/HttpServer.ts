@@ -1,7 +1,9 @@
+import AppConfig from "./config";
+
 class HttpServer {
   private static async request<T>(
     method: "GET" | "POST" | "PUT" | "DELETE",
-    url: string,
+    route: string,
     data?: unknown,
     headers: Record<string, string> = {}
   ): Promise<T> {
@@ -18,7 +20,7 @@ class HttpServer {
     }
 
     try {
-      const res = await fetch(url, options);
+      const res = await fetch(`${AppConfig.apiUrl}/${route}`, options);
 
       const contentType = res.headers.get("Content-Type") || "";
       const isJson = contentType.includes("application/json");
@@ -37,28 +39,31 @@ class HttpServer {
     }
   }
 
-  static get<T>(url: string, headers?: Record<string, string>): Promise<T> {
-    return this.request("GET", url, undefined, headers);
+  static get<T>(route: string, headers?: Record<string, string>): Promise<T> {
+    return this.request("GET", route, undefined, headers);
   }
 
   static post<T>(
-    url: string,
+    route: string,
     data?: unknown,
     headers?: Record<string, string>
   ): Promise<T> {
-    return this.request("POST", url, data, headers);
+    return this.request("POST", route, data, headers);
   }
 
   static put<T>(
-    url: string,
+    route: string,
     data?: unknown,
     headers?: Record<string, string>
   ): Promise<T> {
-    return this.request("PUT", url, data, headers);
+    return this.request("PUT", route, data, headers);
   }
 
-  static delete<T>(url: string, headers?: Record<string, string>): Promise<T> {
-    return this.request("DELETE", url, undefined, headers);
+  static delete<T>(
+    route: string,
+    headers?: Record<string, string>
+  ): Promise<T> {
+    return this.request("DELETE", route, undefined, headers);
   }
 }
 

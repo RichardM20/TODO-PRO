@@ -4,4 +4,5 @@ export interface ILoadingButtonProps
   buttonText: string;
   buttonTextLoading?: string;
   variant?: "fill" | "outlined";
+  fullWidth?: boolean;
 }

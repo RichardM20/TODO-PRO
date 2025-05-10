@@ -1,25 +1,22 @@
-import HttpServer from "@core/HttpServer";
+import {
+  IAuthUser,
+  ILoginPayload,
+  IRegisterPayload,
+} from "@auth-types/auth.type";
 
-import { IAuthUser, ILoginPayload, IRegisterPayload } from "@auth-types/auth.type";
+import HttpServer from "@core/httpServer";
+import { GenericResponse } from "../../../shared/types/response.type";
 
 class AuthService {
-  private static BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
-  private static ROUTE = "auth";
-
-  private static get fullUrl() {
-    return `${this.BASE_URL}/${this.ROUTE}`;
+  static login(payload: ILoginPayload): Promise<GenericResponse<IAuthUser>> {
+    return HttpServer.post<GenericResponse<IAuthUser>>("auth/login", payload);
   }
 
-  static login(payload: ILoginPayload): Promise<IAuthUser> {
-    return HttpServer.post<IAuthUser>(
-      `${this.fullUrl}/login`,
-      payload
-    );
-  }
-
-  static register(payload: IRegisterPayload): Promise<IAuthUser> {
-    return HttpServer.post<IAuthUser>(
-      `${this.fullUrl}/register`,
+  static register(
+    payload: IRegisterPayload
+  ): Promise<GenericResponse<IAuthUser>> {
+    return HttpServer.post<GenericResponse<IAuthUser>>(
+      "auth/register",
       payload
     );
   }

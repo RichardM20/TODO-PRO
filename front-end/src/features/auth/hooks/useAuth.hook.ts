@@ -1,41 +1,56 @@
-import { useState } from "react";
+"use client";
 
 import AuthService from "@auth-services/auth.service";
 import { ILoginPayload, IRegisterPayload } from "@auth-types/auth.type";
+import storage from "@core/storage";
+import { useAuthContext } from "@features/auth/context/authContext";
+import { useAsyncState } from "@shared/hooks/useAsyncState";
 
 const useAuth = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>("");
+  const loginState = useAsyncState<void>();
+  const registerState = useAsyncState<void>();
+
+  const { setUserLogged } = useAuthContext();
 
   const login = async (payload: ILoginPayload) => {
-    setIsLoading(true);
-    setError("");
+    loginState.setIsLoading(true);
+    loginState.setError("");
     try {
       const user = await AuthService.login(payload);
-      return user;
+      if (user.data) {
+        const userData = user.data;
+        storage.setToken(userData.accessToken);
+        setUserLogged(userData);
+      }
     } catch (err: any) {
-      setError(err?.message || "Error logging in");
+      loginState.setError(err?.message || "Error logging in");
       throw err;
     } finally {
-      setIsLoading(false);
+      loginState.setIsLoading(false);
     }
   };
 
   const register = async (payload: IRegisterPayload) => {
-    setIsLoading(true);
-    setError("");
+    registerState.setIsLoading(true);
+    registerState.setError("");
     try {
       const user = await AuthService.register(payload);
-      return user;
     } catch (err: any) {
-      setError(err?.message || "Error registering");
+      registerState.setError(err?.message || "Error registering");
       throw err;
     } finally {
-      setIsLoading(false);
+      registerState.setIsLoading(false);
     }
   };
 
-  return { login, register, isLoading, error };
+  return {
+    login,
+    register,
+    isLoadingLogin: loginState.isLoading,
+    isLoadingRegister: registerState.isLoading,
+    errorLogin: loginState.error,
+    errorRegister: registerState.error,
+  };
 };
 
 export default useAuth;

@@ -1,19 +1,24 @@
 "use client";
 
-import { ILoadingButtonProps } from "@shared/types/loadingButton";
+import { ILoadingButtonProps } from "@shared/types/loadingButton.type";
 
 const LoadingButton = ({
   isLoading = false,
   buttonText,
   buttonTextLoading,
   variant = "fill",
+  fullWidth = false,
   className = "",
   disabled,
   children,
   ...props
 }: ILoadingButtonProps) => {
-  const baseClasses =
-    "w-full rounded-lg px-5 py-2.5 text-center focus:outline-none focus:ring-4 transition-all duration-200 font-medium disabled:opacity-70 flex items-center justify-center";
+  const baseClasses = `
+    ${fullWidth ? "w-full" : "w-auto"}
+    rounded-lg px-5 py-2.5 text-center focus:outline-none focus:ring-4
+    transition-all duration-200 font-medium disabled:opacity-70
+    flex items-center justify-center
+  `;
 
   const variantClasses =
     variant === "fill"

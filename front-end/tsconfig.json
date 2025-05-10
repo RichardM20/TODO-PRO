@@ -27,6 +27,11 @@
       "@auth-hooks/*": ["features/auth/hooks/*"],
       "@auth-services/*": ["features/auth/services/*"],
       "@auth-types/*": ["features/auth/types/*"],
+      "@dashboard/*": ["features/dashboard/*"],
+      "@dashboard-hooks/*": ["features/dashboard/hooks/*"],
+      "@dashboard-services/*": ["features/dashboard/services/*"],
+      "@dashboard-types/*": ["features/dashboard/types/*"],
+      "@dashboard-context/*": ["features/dashboard/context/*"],
       "@shared/*": ["shared/*"]
     },
     "forceConsistentCasingInFileNames": true

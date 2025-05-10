@@ -1,4 +1,8 @@
 import { Inter } from "next/font/google";
+
+
+import { AuthProvider } from "@features/auth/context/authContext";
+
 import "./globals.css";
 
 const inter = Inter({
@@ -13,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
