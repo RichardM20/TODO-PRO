@@ -6,12 +6,14 @@ import connectDB from "@config/database.config";
 import ENV from "@config/env.config";
 import AuthController from "@controllers/auth.controller";
 import TasksController from "@controllers/task.controller";
+import TypeController from "@controllers/type.controller";
 import AuthRoutes from "@routes/auth.route";
 import TaskRoutes from "@routes/tasks.route";
+import TypeRoutes from "@routes/type.route";
 import AuthService from "@services/auth.service";
 import TasksService from "@services/task.service";
+import TypeService from "@services/type.service";
 import logger from "@utils/logger";
-
 
 class Server {
   private app: Application;
@@ -24,6 +26,7 @@ class Server {
     this.paths = {
       auth: "/api/auth",
       tasks: "/api/tasks",
+      type: "/api/types",
     };
     this.connectDB();
     this.middleware();
@@ -36,9 +39,7 @@ class Server {
 
   private middleware(): void {
     this.app.use(express.json());
-    this.app.use(cors(
-
-    ));
+    this.app.use(cors());
     this.app.use(helmet());
   }
 
@@ -53,8 +54,15 @@ class Server {
     const tasksController = new TasksController(tasksService);
     const taskRoutes = TaskRoutes(tasksController);
 
+    // types ->
+
+    const typeService = new TypeService();
+    const typeController = new TypeController(typeService);
+    const typeRoutes = TypeRoutes(typeController);
+
     this.app.use(this.paths.auth, authRoutes);
     this.app.use(this.paths.tasks, taskRoutes);
+    this.app.use(this.paths.type, typeRoutes);
   }
 
   public listen(): void {

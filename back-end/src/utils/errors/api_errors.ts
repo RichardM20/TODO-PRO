@@ -13,12 +13,11 @@ export class NotFoundError extends ApiError {
   }
 }
 
-export class UserAlreadyExist extends ApiError{
-  constructor(message:string){
+export class UserAlreadyExist extends ApiError {
+  constructor(message: string) {
     super(message, 409);
   }
 }
-
 
 export class UnauthorizedError extends ApiError {
   constructor(message: string) {
@@ -26,16 +25,20 @@ export class UnauthorizedError extends ApiError {
   }
 }
 
-
 export class BadRequestError extends ApiError {
   constructor(message: string) {
     super(message, 400);
   }
 }
 
-
 export class InternalServerError extends ApiError {
   constructor(message: string) {
     super(message, 500);
+  }
+}
+
+export class MaxDataLimitError extends ApiError {
+  constructor(message: string) {
+    super(message, 429);
   }
 }

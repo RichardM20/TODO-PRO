@@ -6,25 +6,18 @@ const taskSechema = new Schema<ITask>({
     type: String,
     required: true,
   },
-  title: {
+  content: {
     type: String,
-  },
-  description: {
-    type: String,
+    required: true,
   },
   createdAt: {
     required: true,
     type: Date,
     default: Date.now(),
   },
-  priority: {
-    type: String,
-  },
-  tags: {
-    type: Array,
-  },
   type: {
-    type: String,
+    type: Object,
+    required: true,
   },
   updatedAt: {
     type: Date,

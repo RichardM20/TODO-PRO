@@ -19,11 +19,19 @@ class TasksService {
       Task.countDocuments(query),
     ]);
 
+    const taskModdified = tasks.map((task) => ({
+      ...task,
+      type: {
+        id: task.type.id,
+        name: task.type.name,
+      },
+    }));
+
     return {
       limit,
       offset,
       total,
-      tasks: tasks ?? [],
+      tasks: taskModdified ?? [],
     };
   }
 

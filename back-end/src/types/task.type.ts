@@ -1,15 +1,13 @@
+import { IType } from "./type.types";
+
 export interface ITask {
   id?: string;
   userId?: string;
-  title: string;
-  description?: string;
-  type: string;
-  tags?: string[];
+  type: IType;
+  content: string;
   createdAt?: Date;
   updatedAt?: Date;
-  priority: string;
 }
-
 
 export interface ITasksPaginated {
   total: number;

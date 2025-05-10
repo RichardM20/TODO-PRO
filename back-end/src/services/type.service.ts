@@ -1,0 +1,69 @@
+import Types from "@models/type.model";
+import { MaxDataLimitError, UserAlreadyExist } from "@utils/errors/api_errors";
+import { IType } from "types/type.types";
+
+class TypeService {
+
+async getTypes(userId: string): Promise<(IType & { taskCount: number })[]> {
+  const typesWithCounts = await Types.aggregate([
+    { $match: { userId } },
+    {
+      $addFields: {
+        stringId: { $toString: "$_id" },
+      },
+    },
+    {
+      $lookup: {
+        from: "tasks",
+        localField: "stringId",
+        foreignField: "typeId",
+        as: "tasks",
+      },
+    },
+    {
+      $addFields: {
+        taskCount: { $size: "$tasks" },
+      },
+    },
+    {
+      $project: {
+        id: { $toString: "$_id" },
+        name: 1,
+        taskCount: 1,
+      },
+    },
+  ]);
+
+  return typesWithCounts;
+}
+
+
+
+  async addType(userId: string, type: IType): Promise<void> {
+    const query = { userId, name: type.name };
+
+    const [existingType, totalTypes] = await Promise.all([
+      Types.findOne(query).lean(),
+      Types.countDocuments({ userId }),
+    ]);
+
+    if (existingType) {
+      throw new UserAlreadyExist("A task type with this name already exists");
+    }
+
+    if (totalTypes >= 3) {
+      throw new MaxDataLimitError(
+        "Limit reached. You cannot have more than 3 task types"
+      );
+    }
+
+    const typeToInsert = {
+      ...type,
+      userId,
+    };
+
+    await Types.create(typeToInsert);
+  }
+}
+
+export default TypeService;
