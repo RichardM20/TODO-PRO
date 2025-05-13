@@ -19,6 +19,12 @@ class TasksService {
       Authorization: `${this.accessToken}`,
     });
   }
+
+  updateTask(task: ITask): Promise<GenericResponse<boolean>> {
+    return HttpServer.put<GenericResponse<boolean>>(`tasks/${task.id}`, task, {
+      Authorization: `${this.accessToken}`,
+    });
+  }
 }
 
 export default new TasksService();

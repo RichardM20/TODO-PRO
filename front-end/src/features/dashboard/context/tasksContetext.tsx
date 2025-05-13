@@ -1,7 +1,6 @@
 "use client";
 
 import TasksService from "@dashboard/services/tasks.service";
-import TypeServices from "@dashboard/services/type.services";
 import {
   ITask,
   ITaskContextType,
@@ -9,6 +8,7 @@ import {
 } from "@dashboard/types/task.type";
 import { IType } from "@dashboard/types/type.type";
 import { filterTasks } from "@dashboard/utils/filter";
+import TypeServices from "@features/dashboard/services/type.service";
 import {
   createContext,
   ReactNode,
@@ -43,7 +43,7 @@ export const TaskProvider = ({ children }: TaskProviderProps) => {
       const res = await TasksService.getAllTasks();
       const tasksData = res.data.tasks;
       setTasks(tasksData);
-      setFilteredTasks(filterTasks(tasksData, activeFilter)); // ✅ uso del helper
+      setFilteredTasks(filterTasks(tasksData, activeFilter));
       return tasksData;
     } catch (err: any) {
       const errorMessage = err?.message || "Error getting tasks";
@@ -89,10 +89,27 @@ export const TaskProvider = ({ children }: TaskProviderProps) => {
       setIsLoadingTasks(false);
     }
   };
+  const updateTask = async (task: ITask): Promise<boolean> => {
+    setIsLoadingTasks(true);
+    setTaskError(undefined);
+
+    try {
+      await TasksService.updateTask(task);
+      await refreshTasks();
+      await refreshTypes();
+      return true;
+    } catch (err: any) {
+      const errorMessage = err?.message || "Error upadting task";
+      setTaskError(errorMessage);
+      return false;
+    } finally {
+      setIsLoadingTasks(false);
+    }
+  };
 
   const changeFilter = (filter: TaskFilterType): void => {
     setActiveFilter(filter);
-    setFilteredTasks(filterTasks(tasks, filter)); // ✅ uso del helper
+    setFilteredTasks(filterTasks(tasks, filter));
   };
 
   useEffect(() => {
@@ -120,6 +137,7 @@ export const TaskProvider = ({ children }: TaskProviderProps) => {
     refreshTypes,
     addTask,
     changeFilter,
+    updateTask,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

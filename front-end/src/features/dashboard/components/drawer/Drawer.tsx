@@ -2,13 +2,14 @@
 
 import { IDrawerProps } from "@dashboard/types/drawer.type";
 import { ClipboardList, LogOut, Menu } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DRAWER_ITEMS } from "../../../../shared/constants/drawer_items";
 import { useAuthContext } from "../../../auth/context/authContext";
 import { useDashboardContext } from "../../context/drawerContext";
 import { useTaskData } from "../../hooks/useTask";
 import { useTypeData } from "../../hooks/useTypes";
 import { TaskFilterType } from "../../types/task.type";
+import { getTypeColor } from "../../utils/colors";
 import DrawerAddItem from "./components/DrawerAddItem";
 import DrawerItem from "./components/DrawerItem";
 import DrawerSearch from "./components/DrawerSearch";
@@ -20,17 +21,24 @@ const Drawer = ({ className }: IDrawerProps) => {
   const { types } = useTypeData();
   const { changeFilter } = useTaskData();
 
-  const [activeItem, setActiveItem] = useState("TODO PRO");
+  const defaultFilter: TaskFilterType = (DRAWER_ITEMS.find(
+    (item) => item.type === "all"
+  )?.type || DRAWER_ITEMS[0]?.type) as TaskFilterType;
+
+  const [activeItem, setActiveItem] = useState<TaskFilterType>(defaultFilter);
 
   const handleItemClick = (filter: TaskFilterType) => {
     setActiveItem(filter);
-
     changeFilter(filter);
   };
 
   const handleAddList = () => {
     console.log("Add new list");
   };
+
+  useEffect(() => {
+    changeFilter(defaultFilter);
+  }, [defaultFilter, changeFilter]);
 
   return (
     <div className={`h-full bg-white border-r border-gray-50 ${className}`}>
@@ -56,7 +64,7 @@ const Drawer = ({ className }: IDrawerProps) => {
               key={`key ${item.type}`}
               icon={item.icon}
               label={item.label}
-              isActive={activeItem === item.label}
+              isActive={activeItem === item.type}
               onClick={() => handleItemClick(item.type)}
             />
           ))}
@@ -64,12 +72,13 @@ const Drawer = ({ className }: IDrawerProps) => {
 
         <DrawerSection title="Types">
           {types?.length ? (
-            types.map((type) => (
+            types.map((type, index) => (
               <DrawerItem
                 key={type.id}
                 icon={<ClipboardList size={16} />}
                 label={type.name}
                 count={type.taskCount}
+                className={`${getTypeColor(index)}`}
                 isActive={activeItem === type.name}
               />
             ))
@@ -80,6 +89,7 @@ const Drawer = ({ className }: IDrawerProps) => {
           )}
           <DrawerAddItem label="Add New List" onClick={handleAddList} />
         </DrawerSection>
+
         <DrawerItem
           icon={<LogOut size={16} />}
           label="Sign out"

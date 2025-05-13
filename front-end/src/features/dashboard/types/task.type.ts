@@ -28,6 +28,7 @@ export interface ITaskContextType {
   refreshTasks: () => Promise<ITask[] | null>;
   refreshTypes: () => Promise<IType[] | null>;
   addTask: (task: ITask) => Promise<boolean>;
+  updateTask: (task: ITask) => Promise<boolean>;
   changeFilter: (filter: TaskFilterType) => void;
 }
 

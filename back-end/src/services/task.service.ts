@@ -1,6 +1,7 @@
+import Task from "@models/task.model";
+import { BadRequestError } from "@utils/errors/api_errors";
+import { mapMongoId } from "@utils/mongoById";
 import { ITask, ITasksPaginated } from "types/task.type";
-import Task from "../models/task.model";
-import { BadRequestError } from "../utils/errors/api_errors";
 
 class TasksService {
   async getTasks(
@@ -19,19 +20,21 @@ class TasksService {
       Task.countDocuments(query),
     ]);
 
-    const taskModdified = tasks.map((task) => ({
-      ...task,
-      type: {
-        id: task.type.id,
-        name: task.type.name,
-      },
-    }));
+    const tasksModified = tasks.map((task) =>
+      mapMongoId({
+        ...task,
+        type: {
+          id: task.type.id,
+          name: task.type.name,
+        },
+      })
+    );
 
     return {
       limit,
       offset,
       total,
-      tasks: taskModdified ?? [],
+      tasks: tasksModified ?? [],
     };
   }
 

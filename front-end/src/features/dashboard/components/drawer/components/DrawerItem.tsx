@@ -16,7 +16,7 @@ const DrawerItem = ({
   const content = (
     <div
       className={cn(
-        "flex items-center px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100 transition-colors",
+        "flex items-center px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer",
         isActive && "bg-gray-100 font-medium",
         className
       )}

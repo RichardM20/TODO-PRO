@@ -12,11 +12,13 @@ export const useTaskData = () => {
     addTask,
     activeFilter,
     changeFilter,
+    updateTask,
   } = useTaskContext();
 
   return {
     tasks,
     allTasks,
+    updateTask,
     isLoading: isLoadingTasks,
     error: taskError,
     refreshTasks,

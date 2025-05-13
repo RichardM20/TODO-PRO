@@ -24,11 +24,14 @@ const taskSechema = new Schema<ITask>({
   },
 });
 
-taskSechema.methods.toJSON = function () {
-  const { __v, _id, userId, ...task } = this.toObject();
-  task.uid = _id;
-  return task;
-};
+taskSechema.set("toJSON", {
+  versionKey: false,
+  transform: function (doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+  },
+});
+
 
 const Task = model("Task", taskSechema);
 

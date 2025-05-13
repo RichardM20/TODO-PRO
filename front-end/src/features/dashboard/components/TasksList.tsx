@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { useTaskData } from "@dashboard/hooks/useTask";
-import { getCardColor } from "@features/dashboard/utils/cards_color";
+import { getCardColor } from "@features/dashboard/utils/colors";
 import ErrorContainer from "@shared/components/ErrorContainer";
 
 import { useTypeData } from "../hooks/useTypes";
@@ -14,7 +14,7 @@ import TaskCard from "./cards/TaskCard";
 import TaskContentEdition from "./edition/TaskEdition";
 
 const TaskListData = () => {
-  const { tasks, error, isLoading, addTask } = useTaskData();
+  const { tasks, error, isLoading, addTask, updateTask } = useTaskData();
   const { types } = useTypeData();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -36,6 +36,14 @@ const TaskListData = () => {
     if (!taskSelected) {
       await addTask({
         content,
+        type: type,
+      });
+      setSelectedTask(undefined);
+      handleModalState(false);
+    } else {
+      await updateTask({
+        ...taskSelected,
+        content: content,
         type: type,
       });
       setSelectedTask(undefined);
