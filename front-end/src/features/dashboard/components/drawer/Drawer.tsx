@@ -1,12 +1,14 @@
 "use client";
 
-import { IDrawerProps } from "@dashboard-types/drawer.type";
+import { IDrawerProps } from "@dashboard/types/drawer.type";
 import { ClipboardList, LogOut, Menu } from "lucide-react";
 import { useState } from "react";
 import { DRAWER_ITEMS } from "../../../../shared/constants/drawer_items";
 import { useAuthContext } from "../../../auth/context/authContext";
 import { useDashboardContext } from "../../context/drawerContext";
+import { useTaskData } from "../../hooks/useTask";
 import { useTypeData } from "../../hooks/useTypes";
+import { TaskFilterType } from "../../types/task.type";
 import DrawerAddItem from "./components/DrawerAddItem";
 import DrawerItem from "./components/DrawerItem";
 import DrawerSearch from "./components/DrawerSearch";
@@ -16,10 +18,14 @@ const Drawer = ({ className }: IDrawerProps) => {
   const { closeDrawer } = useDashboardContext();
   const { user } = useAuthContext();
   const { types } = useTypeData();
+  const { changeFilter } = useTaskData();
+
   const [activeItem, setActiveItem] = useState("TODO PRO");
 
-  const handleItemClick = (label: string) => {
-    setActiveItem(label);
+  const handleItemClick = (filter: TaskFilterType) => {
+    setActiveItem(filter);
+
+    changeFilter(filter);
   };
 
   const handleAddList = () => {
@@ -47,11 +53,11 @@ const Drawer = ({ className }: IDrawerProps) => {
         <DrawerSection title="TASKS">
           {DRAWER_ITEMS.map((item) => (
             <DrawerItem
-              key={item.id}
+              key={`key ${item.type}`}
               icon={item.icon}
               label={item.label}
               isActive={activeItem === item.label}
-              onClick={() => handleItemClick(item.label)}
+              onClick={() => handleItemClick(item.type)}
             />
           ))}
         </DrawerSection>
@@ -65,11 +71,12 @@ const Drawer = ({ className }: IDrawerProps) => {
                 label={type.name}
                 count={type.taskCount}
                 isActive={activeItem === type.name}
-                onClick={() => handleItemClick(type.name)}
               />
             ))
           ) : (
-            <p className="text-sm text-gray-500">No types available</p>
+            <p className="flex px-3 py-2 text-sm text-gray-500">
+              No types available
+            </p>
           )}
           <DrawerAddItem label="Add New List" onClick={handleAddList} />
         </DrawerSection>

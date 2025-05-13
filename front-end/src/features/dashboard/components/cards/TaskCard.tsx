@@ -1,6 +1,6 @@
 "use client";
 
-import { ITaskCardProps } from "@dashboard-types/taskCard.type";
+import { ITaskCardProps } from "@dashboard/types/taskCard.type";
 import { formatDateTo24Hrs } from "@shared/utils/dateformat";
 import DOMPurify from "isomorphic-dompurify";
 

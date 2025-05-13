@@ -1,10 +1,11 @@
 "use client";
+
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 
 import { useEffect, useRef, useState } from "react";
 
-import { IType } from "@dashboard-types/type.type";
+import { IType } from "@dashboard/types/type.type";
 import { ITaskContentEditionProps } from "@features/dashboard/types/taskEdition.type";
 import LoadingButton from "@shared/components/buttons/LoadingButton";
 import GenericDropdown from "@shared/components/genericDropdown";

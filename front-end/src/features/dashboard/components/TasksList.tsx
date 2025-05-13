@@ -1,20 +1,23 @@
 "use client";
 
-import { getCardColor } from "@dashboard/constants/cards_color";
-import { useTaskData } from "@features/dashboard/hooks/useTask";
 import { useState } from "react";
-import ErrorContainer from "../../../shared/components/ErrorContainer";
+
+import { useTaskData } from "@dashboard/hooks/useTask";
+import { getCardColor } from "@features/dashboard/utils/cards_color";
+import ErrorContainer from "@shared/components/ErrorContainer";
+
 import { useTypeData } from "../hooks/useTypes";
 import { ITask } from "../types/task.type";
 import { IType } from "../types/type.type";
 import AddTaskCard from "./cards/AddTaskCard";
 import TaskCard from "./cards/TaskCard";
-import TaskContentEdition from "./TaskEdition";
+import TaskContentEdition from "./edition/TaskEdition";
 
 const TaskListData = () => {
   const { tasks, error, isLoading, addTask } = useTaskData();
   const { types } = useTypeData();
   const [openModal, setOpenModal] = useState<boolean>(false);
+
   const [taskSelected, setSelectedTask] = useState<ITask | undefined>(
     undefined
   );
@@ -76,7 +79,9 @@ const TaskListData = () => {
 
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-bold mb-6">TODO PRO</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+        <h1 className="text-2xl font-bold">TODO PRO</h1>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {renderTasks()}

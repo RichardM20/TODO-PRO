@@ -1,6 +1,6 @@
 import HttpServer from "@core/httpServer";
 import storage from "@core/storage";
-import { IType } from "@dashboard-types/type.type";
+import { IType } from "@dashboard/types/type.type";
 import { GenericResponse } from "@shared/types/response.type";
 
 class TypeServices {

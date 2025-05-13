@@ -2,7 +2,7 @@ import {
   IAuthUser,
   ILoginPayload,
   IRegisterPayload,
-} from "@auth-types/auth.type";
+} from "@auth/types/auth.type";
 
 import HttpServer from "@core/httpServer";
 import { GenericResponse } from "../../../shared/types/response.type";

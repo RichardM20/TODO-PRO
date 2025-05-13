@@ -3,41 +3,46 @@ import { MaxDataLimitError, UserAlreadyExist } from "@utils/errors/api_errors";
 import { IType } from "types/type.types";
 
 class TypeService {
-
-async getTypes(userId: string): Promise<(IType & { taskCount: number })[]> {
-  const typesWithCounts = await Types.aggregate([
-    { $match: { userId } },
-    {
-      $addFields: {
-        stringId: { $toString: "$_id" },
+  async getTypes(userId: string): Promise<(IType & { taskCount: number })[]> {
+    const typesWithCounts = await Types.aggregate([
+      { $match: { userId } },
+      {
+        $addFields: {
+          stringId: { $toString: "$_id" },
+        },
       },
-    },
-    {
-      $lookup: {
-        from: "tasks",
-        localField: "stringId",
-        foreignField: "typeId",
-        as: "tasks",
+      {
+        $lookup: {
+          from: "tasks",
+          let: { typeIdString: "$stringId" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$type._id", "$$typeIdString"],
+                },
+              },
+            },
+          ],
+          as: "tasks",
+        },
       },
-    },
-    {
-      $addFields: {
-        taskCount: { $size: "$tasks" },
+      {
+        $addFields: {
+          taskCount: { $size: "$tasks" },
+        },
       },
-    },
-    {
-      $project: {
-        id: { $toString: "$_id" },
-        name: 1,
-        taskCount: 1,
+      {
+        $project: {
+          id: "$stringId",
+          name: 1,
+          taskCount: 1,
+        },
       },
-    },
-  ]);
+    ]);
 
-  return typesWithCounts;
-}
-
-
+    return typesWithCounts;
+  }
 
   async addType(userId: string, type: IType): Promise<void> {
     const query = { userId, name: type.name };

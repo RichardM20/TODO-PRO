@@ -1,6 +1,6 @@
 "use client";
 
-import { IDrawerItemProps } from "@dashboard-types/drawer.type";
+import { IDrawerItemProps } from "@dashboard/types/drawer.type";
 import { cn } from "@shared/utils/cn";
 import Link from "next/link";
 
@@ -23,11 +23,15 @@ const DrawerItem = ({
     >
       {icon && <span className="mr-3 text-gray-500">{icon}</span>}
       <span className="flex-grow">{label}</span>
-      {count && (
-        <span className="ml-auto text-xs text-cyan-800 bg-gray-100 rounded-full w-6 h-6 flex items-center justify-center">
-          {count}
-        </span>
-      )}
+
+      <span
+        className={cn(
+          "ml-auto text-xs text-cyan-800 rounded-full w-6 h-6 flex items-center justify-center",
+          count !== undefined ? "bg-gray-100" : "bg-transparent"
+        )}
+      >
+        {count}
+      </span>
     </div>
   );
 

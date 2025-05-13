@@ -1,10 +1,16 @@
-import { Calendar, List } from "lucide-react";
+import { TaskFilterType } from "@dashboard/types/task.type";
+import { Calendar, Clock, List } from "lucide-react";
 
 export const DRAWER_ITEMS = [
-  { id: 1, label: "All", icon: <List size={16} /> },
+  { label: "All", type: "all" as TaskFilterType, icon: <List size={16} /> },
   {
-    id: 2,
-    label: "Calendar",
+    label: "Today",
+    type: "today" as TaskFilterType,
+    icon: <Clock size={16} />,
+  },
+  {
+    label: "Week",
+    type: "week" as TaskFilterType,
     icon: <Calendar size={16} />,
   },
 ];

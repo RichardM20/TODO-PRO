@@ -1,6 +1,6 @@
 "use client"
 
-import { IDrawerSearchProps } from "@dashboard-types/drawer.type"
+import { IDrawerSearchProps } from "@dashboard/types/drawer.type";
 import { Search } from "lucide-react"
 
 

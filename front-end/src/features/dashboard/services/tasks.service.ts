@@ -1,6 +1,6 @@
 import HttpServer from "@core/httpServer";
 import storage from "@core/storage";
-import { ITask, ITasksPaginated } from "@dashboard-types/task.type";
+import { ITask, ITasksPaginated } from "@dashboard/types/task.type";
 import { GenericResponse } from "@shared/types/response.type";
 
 class TasksService {

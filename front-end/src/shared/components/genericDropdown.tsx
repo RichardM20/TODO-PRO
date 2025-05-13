@@ -1,6 +1,6 @@
 "use client";
 
-import { IType } from "@dashboard-types/type.type";
+import { IType } from "@dashboard/types/type.type";
 import { useState } from "react";
 import { IGenericDropdown } from "../types/genericDropDown.type";
 

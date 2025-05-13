@@ -1,4 +1,4 @@
-import { IAddTaskCard } from "@dashboard-types/taskCard.type";
+import { IAddTaskCard } from "@dashboard/types/taskCard.type";
 
 const AddTaskCard = (props: IAddTaskCard) => {
   const sizeClasses = props.square ? "w-[300px] h-[300px]" : "w-full h-full";

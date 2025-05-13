@@ -1,6 +1,6 @@
 "use client";
 
-import { IDrawerIconProps } from "@dashboard-types/drawer.type";
+import { IDrawerIconProps } from "@dashboard/types/drawer.type";
 import { Menu } from "lucide-react";
 
 

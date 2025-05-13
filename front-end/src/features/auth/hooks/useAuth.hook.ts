@@ -1,7 +1,7 @@
 "use client";
 
-import AuthService from "@auth-services/auth.service";
-import { ILoginPayload, IRegisterPayload } from "@auth-types/auth.type";
+import AuthService from "@auth/services/auth.service";
+import { ILoginPayload, IRegisterPayload } from "@auth/types/auth.type";
 import storage from "@core/storage";
 import { useAuthContext } from "@features/auth/context/authContext";
 import { useAsyncState } from "@shared/hooks/useAsyncState";

@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 
-import { IAuthFormTypeProps } from "@auth-types/form.type";
+import { IAuthFormTypeProps } from "@auth/types/form.type";
 
 
 const AuthBottomLink = (props: IAuthFormTypeProps) => {
