@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
+
 import { IDrawerItemProps } from "@dashboard/types/drawer.type";
 import { cn } from "@shared/utils/cn";
-import Link from "next/link";
 
 const DrawerItem = ({
   icon,

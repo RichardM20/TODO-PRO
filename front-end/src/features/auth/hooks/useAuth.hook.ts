@@ -1,14 +1,16 @@
 "use client";
 
+import { useCallback } from "react";
+
 import AuthService from "@auth/services/auth.service";
 import { ILoginPayload, IRegisterPayload } from "@auth/types/auth.type";
-import storage from "@core/storage";
 import { useAuthContext } from "@features/auth/context/authContext";
 import { useAsyncState } from "@shared/hooks/useAsyncState";
 
 const useAuth = () => {
   const loginState = useAsyncState<void>();
   const registerState = useAsyncState<void>();
+  const profileState = useAsyncState<void>();
 
   const { setUserLogged } = useAuthContext();
 
@@ -19,11 +21,11 @@ const useAuth = () => {
       const user = await AuthService.login(payload);
       if (user.data) {
         const userData = user.data;
-        storage.setToken(userData.accessToken);
+
         setUserLogged(userData);
       }
-    } catch (err: any) {
-      loginState.setError(err?.message || "Error logging in");
+    } catch (err) {
+      loginState.setError("Error logging in");
       throw err;
     } finally {
       loginState.setIsLoading(false);
@@ -34,14 +36,30 @@ const useAuth = () => {
     registerState.setIsLoading(true);
     registerState.setError("");
     try {
-      const user = await AuthService.register(payload);
-    } catch (err: any) {
-      registerState.setError(err?.message || "Error registering");
-      throw err;
+      await AuthService.register(payload);
+    } catch {
+      registerState.setError("Error registering");
     } finally {
       registerState.setIsLoading(false);
     }
   };
+
+  const getUser = useCallback(async () => {
+    profileState.setIsLoading(true);
+    try {
+      const profile = await AuthService.refreshMe();
+      if (profile) {
+        setUserLogged(profile.data);
+        return true;
+      } else {
+        return false;
+      }
+    } catch {
+      return false;
+    } finally {
+      profileState.setIsLoading(false);
+    }
+  }, [profileState, setUserLogged]);
 
   return {
     login,
@@ -50,6 +68,8 @@ const useAuth = () => {
     isLoadingRegister: registerState.isLoading,
     errorLogin: loginState.error,
     errorRegister: registerState.error,
+    isLoadingProfile: profileState.isLoading,
+    getUser,
   };
 };
 

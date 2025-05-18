@@ -1,12 +1,14 @@
 "use client";
+import { useRouter } from "next/navigation";
+
 import { ChangeEvent, FormEvent, useState } from "react";
 
 import { IAuthFormProps } from "@auth/types/form.type";
-import LoadingButton from "@shared/components/buttons/LoadingButton";
+import SimpleButton from "@shared/components/buttons/SimpleButton";
 import ErrorContainer from "@shared/components/ErrorContainer";
 import InputField from "@shared/components/inputs/FieldForm";
 import { emailRegex } from "@shared/utils/validEmail";
-import { useRouter } from "next/navigation";
+
 import AuthBottomLink from "./AuthBottomLink";
 
 const AuthForm = (props: IAuthFormProps) => {
@@ -78,7 +80,7 @@ const AuthForm = (props: IAuthFormProps) => {
               <ErrorContainer error={props.error || emailInvalid} />
             )}
 
-            <LoadingButton
+            <SimpleButton
               fullWidth={true}
               buttonText={props.buttonText}
               isLoading={props.isLoading}

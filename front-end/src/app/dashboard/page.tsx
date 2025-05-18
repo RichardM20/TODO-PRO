@@ -1,21 +1,12 @@
-"use client";
-
-import TaskListData from "@dashboard/components/TasksList";
-import { useDashboardContext } from "../../features/dashboard/context/drawerContext";
+import ProtectedRoute from "@auth/components/ProtectedRoute";
+import DashboardClient from "@dashboard/components/DashboardClient";
 
 const DashboardPage = () => {
-  const { indexView } = useDashboardContext();
-
-  const renderSection = () => {
-    switch (indexView) {
-      case 0:
-        return <TaskListData />;
-      default:
-        return <TaskListData />;
-    }
-  };
-
-  return <div className="dashboard-page">{renderSection()}</div>;
+  return (
+    <ProtectedRoute>
+      <DashboardClient />
+    </ProtectedRoute>
+  );
 };
 
 export default DashboardPage;

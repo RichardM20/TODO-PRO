@@ -5,13 +5,14 @@ import User from "@models/user.model";
 import { HttpBadResponse } from "@utils/http_response";
 import logger from "@utils/logger";
 import { AuthRequest } from "types/auth.type";
+import ENV from "../config/env.config";
 
 const validateJWT = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.header("Authorization");
+  const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({
@@ -20,7 +21,7 @@ const validateJWT = async (
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_JWT as string);
+    const decoded = jwt.verify(token, ENV.SECRET_JWT as string);
 
     if (typeof decoded !== "object" || !("uid" in decoded)) {
       return HttpBadResponse(
@@ -41,10 +42,11 @@ const validateJWT = async (
       return HttpBadResponse(
         res,
         401,
-        "Access token invalid - Incorret user",
+        "Access token invalid - Incorrect user",
         null
       );
     }
+
     next();
   } catch (error) {
     logger.error(error);

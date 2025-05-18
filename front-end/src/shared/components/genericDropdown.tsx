@@ -1,7 +1,9 @@
 "use client";
 
-import { IType } from "@dashboard/types/type.type";
 import { useState } from "react";
+
+import { IType } from "@dashboard/types/type.type";
+
 import { IGenericDropdown } from "../types/genericDropDown.type";
 
 const GenericDropdown = ({
@@ -16,7 +18,6 @@ const GenericDropdown = ({
   const handleSelect = (tag: IType) => {
     setSelectedTag(tag);
     onSelect(tag);
-    console.warn("selected", tag.id);
     setIsOpen(false);
   };
 

@@ -1,24 +1,25 @@
 "use client";
 
-import { IDrawerProps } from "@dashboard/types/drawer.type";
 import { ClipboardList, LogOut, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
-import { DRAWER_ITEMS } from "../../../../shared/constants/drawer_items";
-import { useAuthContext } from "../../../auth/context/authContext";
-import { useDashboardContext } from "../../context/drawerContext";
-import { useTaskData } from "../../hooks/useTask";
-import { useTypeData } from "../../hooks/useTypes";
-import { TaskFilterType } from "../../types/task.type";
-import { getTypeColor } from "../../utils/colors";
+
+import { useAuthContext } from "@auth/context/authContext";
+import { useDashboardContext } from "@dashboard/context/drawerContext";
+import { useTaskData } from "@dashboard/hooks/useTask";
+import { useTypeData } from "@dashboard/hooks/useTypes";
+import { IDrawerProps } from "@dashboard/types/drawer.type";
+import { TaskFilterType } from "@dashboard/types/task.type";
+import { getTypeColor } from "@dashboard/utils/colors";
+import { DRAWER_ITEMS } from "@shared/constants/drawer_items";
+
 import DrawerAddItem from "./components/DrawerAddItem";
 import DrawerItem from "./components/DrawerItem";
-import DrawerSearch from "./components/DrawerSearch";
 import DrawerSection from "./components/DrawerSection";
 
 const Drawer = ({ className }: IDrawerProps) => {
   const { closeDrawer } = useDashboardContext();
   const { user } = useAuthContext();
-  const { types } = useTypeData();
+  const { types, isLoading } = useTypeData();
   const { changeFilter } = useTaskData();
 
   const defaultFilter: TaskFilterType = (DRAWER_ITEMS.find(
@@ -38,14 +39,15 @@ const Drawer = ({ className }: IDrawerProps) => {
 
   useEffect(() => {
     changeFilter(defaultFilter);
-  }, [defaultFilter, changeFilter]);
+  }, []);
 
+  if (isLoading) {
+    return <></>;
+  }
   return (
     <div className={`h-full bg-white border-r border-gray-50 ${className}`}>
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        <h2 className="text-xl font-semibold text-gray-800">
-          {user?.user.name}
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-800">{`${user?.name}`}</h2>
         <button
           type="button"
           onClick={closeDrawer}
@@ -56,8 +58,6 @@ const Drawer = ({ className }: IDrawerProps) => {
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
-        <DrawerSearch placeholder="Search" />
-
         <DrawerSection title="TASKS">
           {DRAWER_ITEMS.map((item) => (
             <DrawerItem
@@ -76,7 +76,7 @@ const Drawer = ({ className }: IDrawerProps) => {
               <DrawerItem
                 key={type.id}
                 icon={<ClipboardList size={16} />}
-                label={type.name}
+                label={"example"}
                 count={type.taskCount}
                 className={`${getTypeColor(index)}`}
                 isActive={activeItem === type.name}

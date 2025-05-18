@@ -1,7 +1,8 @@
 "use client";
 
-import { DrawerContextType } from "@dashboard/types/drawer.type";
 import { createContext, ReactNode, useContext, useState } from "react";
+
+import { DrawerContextType } from "@dashboard/types/drawer.type";
 
 const DashboardContext = createContext<DrawerContextType | undefined>(undefined);
 

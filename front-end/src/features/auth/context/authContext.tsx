@@ -1,14 +1,16 @@
 "use client";
 
-import { AuthContextType, IAuthUser } from "@auth/types/auth.type";
 import { createContext, useContext, useState } from "react";
+
+import { AuthContextType } from "@auth/types/auth.type";
+import { IUser } from "@features/auth/types/user.type";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<IAuthUser>();
+  const [user, setUser] = useState<IUser>();
 
-  const setUserLogged = (newUser: IAuthUser) => {
+  const setUserLogged = (newUser: IUser) => {
     setUser(newUser);
   };
 
@@ -21,7 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         user,
         setUserLogged,
-        isAuthenticated: !!user?.accessToken,
+
         logOut,
       }}
     >

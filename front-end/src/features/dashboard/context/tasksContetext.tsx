@@ -1,14 +1,5 @@
 "use client";
 
-import TasksService from "@dashboard/services/tasks.service";
-import {
-  ITask,
-  ITaskContextType,
-  TaskFilterType,
-} from "@dashboard/types/task.type";
-import { IType } from "@dashboard/types/type.type";
-import { filterTasks } from "@dashboard/utils/filter";
-import TypeServices from "@features/dashboard/services/type.service";
 import {
   createContext,
   ReactNode,
@@ -18,6 +9,17 @@ import {
   useState,
 } from "react";
 
+import TasksService from "@dashboard/services/tasks.service";
+import {
+  ITask,
+  ITaskContextType,
+  TaskFilterType,
+} from "@dashboard/types/task.type";
+import { IType } from "@dashboard/types/type.type";
+import { filterTasks } from "@dashboard/utils/filter";
+import TypeServices from "@features/dashboard/services/type.service";
+import { useAsyncState } from "@shared/hooks/useAsyncState";
+
 const TaskContext = createContext<ITaskContextType | undefined>(undefined);
 
 interface TaskProviderProps {
@@ -25,91 +27,84 @@ interface TaskProviderProps {
 }
 
 export const TaskProvider = ({ children }: TaskProviderProps) => {
-  const [tasks, setTasks] = useState<ITask[]>();
+  const tasksState = useAsyncState<ITask[]>();
+  const typesState = useAsyncState<IType[]>();
+
   const [filteredTasks, setFilteredTasks] = useState<ITask[]>();
-  const [types, setTypes] = useState<IType[]>();
-  const [isLoadingTasks, setIsLoadingTasks] = useState<boolean>(false);
-  const [isLoadingTypes, setIsLoadingTypes] = useState<boolean>(false);
-  const [taskError, setTaskError] = useState<string>();
-  const [typeError, setTypeError] = useState<string>();
   const [activeFilter, setActiveFilter] = useState<TaskFilterType>("all");
   const initialized = useRef(false);
 
   const refreshTasks = async (): Promise<ITask[] | null> => {
-    setIsLoadingTasks(true);
-    setTaskError(undefined);
+    tasksState.setIsLoading(true);
+    tasksState.setError(undefined);
 
     try {
       const res = await TasksService.getAllTasks();
       const tasksData = res.data.tasks;
-      setTasks(tasksData);
-      setFilteredTasks(filterTasks(tasksData, activeFilter));
+      tasksState.setData(tasksData);
       return tasksData;
-    } catch (err: any) {
-      const errorMessage = err?.message || "Error getting tasks";
-      setTaskError(errorMessage);
+    } catch {
+      tasksState.setError("Error getting tasks");
       return null;
     } finally {
-      setIsLoadingTasks(false);
+      tasksState.setIsLoading(false);
     }
   };
 
   const refreshTypes = async (): Promise<IType[] | null> => {
-    setIsLoadingTypes(true);
-    setTypeError(undefined);
+    typesState.setIsLoading(true);
+    typesState.setError(undefined);
 
     try {
       const res = await TypeServices.getAllTypes();
       const typesData = res.data;
-      setTypes(typesData);
+      typesState.setData(typesData);
       return typesData;
-    } catch (err: any) {
-      const errorMessage = err?.message || "Error getting types";
-      setTypeError(errorMessage);
+    } catch {
+      typesState.setError("Error getting types");
       return null;
     } finally {
-      setIsLoadingTypes(false);
+      typesState.setIsLoading(false);
     }
   };
 
   const addTask = async (task: ITask): Promise<boolean> => {
-    setIsLoadingTasks(true);
-    setTaskError(undefined);
+    tasksState.setIsLoading(true);
+    tasksState.setError(undefined);
 
     try {
       await TasksService.addTask(task);
       await refreshTasks();
       await refreshTypes();
       return true;
-    } catch (err: any) {
-      const errorMessage = err?.message || "Error adding task";
-      setTaskError(errorMessage);
+    } catch {
+      tasksState.setError("Error adding task");
       return false;
     } finally {
-      setIsLoadingTasks(false);
+      tasksState.setIsLoading(false);
     }
   };
+
   const updateTask = async (task: ITask): Promise<boolean> => {
-    setIsLoadingTasks(true);
-    setTaskError(undefined);
+    tasksState.setIsLoading(true);
+    tasksState.setError(undefined);
 
     try {
       await TasksService.updateTask(task);
       await refreshTasks();
       await refreshTypes();
       return true;
-    } catch (err: any) {
-      const errorMessage = err?.message || "Error upadting task";
-      setTaskError(errorMessage);
+    } catch {
+      tasksState.setError("Error updating task");
       return false;
     } finally {
-      setIsLoadingTasks(false);
+      tasksState.setIsLoading(false);
     }
   };
 
   const changeFilter = (filter: TaskFilterType): void => {
     setActiveFilter(filter);
-    setFilteredTasks(filterTasks(tasks, filter));
+    setFilteredTasks(filterTasks(tasksState.data, filter));
   };
 
   useEffect(() => {
@@ -121,17 +116,17 @@ export const TaskProvider = ({ children }: TaskProviderProps) => {
   }, []);
 
   useEffect(() => {
-    setFilteredTasks(filterTasks(tasks, activeFilter));
-  }, [tasks, activeFilter]);
+    setFilteredTasks(filterTasks(tasksState.data, activeFilter));
+  }, [tasksState.data, activeFilter]);
 
   const value = {
     tasks: filteredTasks,
-    allTasks: tasks,
-    types,
-    isLoadingTasks,
-    isLoadingTypes,
-    taskError,
-    typeError,
+    allTasks: tasksState.data,
+    types: typesState.data,
+    isLoadingTasks: tasksState.isLoading,
+    isLoadingTypes: typesState.isLoading,
+    taskError: tasksState.error,
+    typeError: typesState.error,
     activeFilter,
     refreshTasks,
     refreshTypes,

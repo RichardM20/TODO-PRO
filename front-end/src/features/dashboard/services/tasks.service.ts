@@ -1,29 +1,18 @@
 import HttpServer from "@core/httpServer";
-import storage from "@core/storage";
 import { ITask, ITasksPaginated } from "@dashboard/types/task.type";
 import { GenericResponse } from "@shared/types/response.type";
 
 class TasksService {
-  private get accessToken(): string {
-    return storage.getToken() ?? "";
-  }
-
   getAllTasks(): Promise<GenericResponse<ITasksPaginated>> {
-    return HttpServer.get<GenericResponse<ITasksPaginated>>("tasks", {
-      Authorization: `${this.accessToken}`,
-    });
+    return HttpServer.get<GenericResponse<ITasksPaginated>>("tasks");
   }
 
   addTask(task: ITask): Promise<GenericResponse<boolean>> {
-    return HttpServer.post<GenericResponse<boolean>>("tasks", task, {
-      Authorization: `${this.accessToken}`,
-    });
+    return HttpServer.post<GenericResponse<boolean>>("tasks", task);
   }
 
   updateTask(task: ITask): Promise<GenericResponse<boolean>> {
-    return HttpServer.put<GenericResponse<boolean>>(`tasks/${task.id}`, task, {
-      Authorization: `${this.accessToken}`,
-    });
+    return HttpServer.put<GenericResponse<boolean>>(`tasks/${task.id}`, task);
   }
 }
 

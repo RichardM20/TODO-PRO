@@ -1,7 +1,8 @@
 "use client";
 
-import { IDrawerIconProps } from "@dashboard/types/drawer.type";
 import { Menu } from "lucide-react";
+
+import { IDrawerIconProps } from "@dashboard/types/drawer.type";
 
 
 const DrawerToggleIcon = (props: IDrawerIconProps) => {

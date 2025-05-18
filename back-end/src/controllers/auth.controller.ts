@@ -4,6 +4,8 @@ import AuthService from "@services/auth.service";
 import { ApiError } from "@utils/errors/api_errors";
 import { HttpBadResponse, HttpResponse } from "@utils/http_response";
 import logger from "@utils/logger";
+import { setTokenCookie } from "@utils/set_cookie";
+import { AuthRequest } from "types/auth.type";
 
 class AuthController {
   private authService: AuthService;
@@ -15,8 +17,14 @@ class AuthController {
   async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      const userLogged = await this.authService.login(email, password);
-      HttpResponse(res, 200, "sucess", userLogged);
+
+      const { user, accessToken } = await this.authService.login(
+        email,
+        password
+      );
+
+      setTokenCookie(res, accessToken);
+      HttpResponse(res, 200, "sucess", user);
     } catch (error) {
       logger.error(error);
       if (error instanceof ApiError) {
@@ -31,13 +39,30 @@ class AuthController {
     try {
       const { name, email, password } = req.body;
 
-      const userRegistered = await this.authService.register(
+      const { accessToken, user } = await this.authService.register(
         name,
         email,
         password
       );
 
-      HttpResponse(res, 200, "sucess", userRegistered);
+      setTokenCookie(res, accessToken);
+      HttpResponse(res, 200, "sucess", user);
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof ApiError) {
+        HttpBadResponse(res, error.statusCode, error.message, null);
+      } else {
+        HttpBadResponse(res, 500, "Internal server error", null);
+      }
+    }
+  }
+
+  async refreshMe(req: AuthRequest, res: Response) {
+    try {
+      const userId = req.uid ?? "";
+      const user = await this.authService.refreshMe(userId);
+
+      HttpResponse(res, 200, "sucess", user);
     } catch (error) {
       logger.error(error);
       if (error instanceof ApiError) {

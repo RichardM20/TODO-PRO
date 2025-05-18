@@ -1,9 +1,8 @@
 "use client";
+
 import Link from "next/link";
 
-
 import { IAuthFormTypeProps } from "@auth/types/form.type";
-
 
 const AuthBottomLink = (props: IAuthFormTypeProps) => {
   const isLogin = props.type === "login";

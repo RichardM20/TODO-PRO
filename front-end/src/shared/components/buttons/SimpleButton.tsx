@@ -2,7 +2,7 @@
 
 import { ILoadingButtonProps } from "@shared/types/loadingButton.type";
 
-const LoadingButton = ({
+const SimpleButton = ({
   isLoading = false,
   buttonText,
   buttonTextLoading,
@@ -18,6 +18,7 @@ const LoadingButton = ({
     rounded-lg px-5 py-2.5 text-center focus:outline-none focus:ring-4
     transition-all duration-200 font-medium disabled:opacity-70
     flex items-center justify-center
+    cursor-pointer
   `;
 
   const variantClasses =
@@ -40,4 +41,4 @@ const LoadingButton = ({
   );
 };
 
-export default LoadingButton;
+export default SimpleButton;

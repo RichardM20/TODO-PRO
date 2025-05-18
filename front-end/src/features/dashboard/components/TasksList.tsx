@@ -9,6 +9,7 @@ import ErrorContainer from "@shared/components/ErrorContainer";
 import { useTypeData } from "../hooks/useTypes";
 import { ITask } from "../types/task.type";
 import { IType } from "../types/type.type";
+
 import AddTaskCard from "./cards/AddTaskCard";
 import TaskCard from "./cards/TaskCard";
 import TaskContentEdition from "./edition/TaskEdition";

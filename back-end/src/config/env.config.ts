@@ -12,12 +12,13 @@ if(fs.existsSync(envSource)){
     dotenv.config()
 }
 
-export const ENV={
-    NODE_ENV,
-    PORT:process.env.PORT || 3000,
-    MONGODB_CNN:process.env.MONGODB_CNN,
-    SECRET_JWT:process.env.SECRET_JWT,
-    LOG_LEVEL:process.env.LOG_LEVEL,
+export const ENV = {
+  NODE_ENV,
+  PORT: process.env.PORT || 3000,
+  MONGODB_CNN: process.env.MONGODB_CNN,
+  SECRET_JWT: process.env.SECRET_JWT,
+  LOG_LEVEL: process.env.LOG_LEVEL,
+  FRONT_END: process.env.FRONT_END,
 };
 
 

@@ -13,6 +13,7 @@ class HttpServer {
         "Content-Type": "application/json",
         ...headers,
       },
+      credentials: "include",
     };
 
     if (data && method !== "GET") {

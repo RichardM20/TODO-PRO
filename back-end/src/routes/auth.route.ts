@@ -3,6 +3,7 @@ import { Router } from "express";
 import AuthController from "@controllers/auth.controller";
 import { validateRequest } from "@middlewares/validate_req.middlewere";
 import { loginSchema, registerSchema } from "@schemas/auth.schema";
+import validateJWT from "../middlewares/validate_jwt.middlewere";
 
 const AuthRoutes = (authController: AuthController) => {
   const router = Router();
@@ -11,10 +12,12 @@ const AuthRoutes = (authController: AuthController) => {
     authController.login(req, res)
   );
 
-  router.post(
-    "/register",
-    validateRequest(registerSchema),
-    (req, res) => authController.register(req, res)
+  router.post("/register", validateRequest(registerSchema), (req, res) =>
+    authController.register(req, res)
+  );
+
+  router.get("/refreshMe", validateJWT, (req, res) =>
+    authController.refreshMe(req, res)
   );
 
   return router;

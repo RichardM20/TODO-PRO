@@ -1,6 +1,7 @@
 "use client";
 
 import useAuth from "@auth/hooks/useAuth.hook";
+
 import AuthForm from "./AuthForm/AuthForm";
 
  const RegisterForm =  () =>{
@@ -18,4 +19,4 @@ import AuthForm from "./AuthForm/AuthForm";
     />
   );
 }
-export default RegisterForm();
+export default RegisterForm;

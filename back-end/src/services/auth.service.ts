@@ -63,6 +63,17 @@ class AuthService {
 
     return userRegistered;
   }
+
+  async refreshMe(userId: string) {
+    const query = { _id: userId };
+    const user = await User.findById(query).select("-password");
+
+    if (!user) {
+      throw new NotFoundError("user not found");
+    }
+
+    return user;
+  }
 }
 
 export default AuthService;

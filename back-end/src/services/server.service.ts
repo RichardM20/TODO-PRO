@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application } from "express";
 import helmet from "helmet";
@@ -39,8 +40,22 @@ class Server {
 
   private middleware(): void {
     this.app.use(express.json());
-    this.app.use(cors());
-    this.app.use(helmet());
+    this.app.use(cookieParser());
+
+    this.app.use(
+      cors({
+        origin: ENV.FRONT_END,
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+      })
+    );
+
+    this.app.use(
+      helmet({
+        crossOriginResourcePolicy: { policy: "cross-origin" },
+      })
+    );
   }
 
   private routes(): void {
