@@ -1,6 +1,6 @@
 export interface IType {
-  id: string;
+  id?: string;
   name: string;
   userId?: string;
-  taskCount: number
+  taskCount?: number;
 }

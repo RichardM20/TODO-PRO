@@ -20,6 +20,10 @@ const AuthRoutes = (authController: AuthController) => {
     authController.refreshMe(req, res)
   );
 
+   router.post("/logout", validateJWT, (req, res) =>
+     authController.logout(req, res)
+   );
+
   return router;
 };
 

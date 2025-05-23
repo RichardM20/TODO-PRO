@@ -1,75 +1,56 @@
-import { Request, Response } from "express";
-
 import AuthService from "@services/auth.service";
-import { ApiError } from "@utils/errors/api_errors";
-import { HttpBadResponse, HttpResponse } from "@utils/http_response";
-import logger from "@utils/logger";
-import { setTokenCookie } from "@utils/set_cookie";
+import { clearTokenCookie, setTokenCookie } from "@utils/set_cookie";
+import { Request, Response } from "express";
 import { AuthRequest } from "types/auth.type";
+import BaseController from "./base.controller";
 
-class AuthController {
+class AuthController extends BaseController {
   private authService: AuthService;
 
   constructor(authService: AuthService) {
+    super();
     this.authService = authService;
   }
 
   async login(req: Request, res: Response) {
-    try {
+    await this.executeAction(res, async () => {
       const { email, password } = req.body;
-
       const { user, accessToken } = await this.authService.login(
         email,
         password
       );
-
       setTokenCookie(res, accessToken);
-      HttpResponse(res, 200, "sucess", user);
-    } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, "Internal server error", null);
-      }
-    }
+      this.handleResponse(res, 200, "success", user);
+    });
   }
 
   async register(req: Request, res: Response) {
-    try {
+    await this.executeAction(res, async () => {
       const { name, email, password } = req.body;
-
       const { accessToken, user } = await this.authService.register(
         name,
         email,
         password
       );
-
       setTokenCookie(res, accessToken);
-      HttpResponse(res, 200, "sucess", user);
-    } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, "Internal server error", null);
-      }
-    }
+      this.handleResponse(res, 200, "success", user);
+    });
   }
 
   async refreshMe(req: AuthRequest, res: Response) {
-    try {
+    await this.executeAction(res, async () => {
       const userId = req.uid ?? "";
       const user = await this.authService.refreshMe(userId);
+      this.handleResponse(res, 200, "success", user);
+    });
+  }
 
-      HttpResponse(res, 200, "sucess", user);
+  async logout(req: Request, res: Response) {
+    try {
+      clearTokenCookie(res);
+      this.handleResponse(res, 200, "success");
     } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, "Internal server error", null);
-      }
+      this.handleResponse(res, 500, "Internal server error");
     }
   }
 }

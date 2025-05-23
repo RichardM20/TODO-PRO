@@ -41,3 +41,9 @@ export const filterTasks = (
       return tasks;
   }
 };
+
+
+  export const filterDataListOptions = [
+    { value: "date-asc", label: "Oldest first" },
+    { value: "date-desc", label: "Newest first" },
+  ];

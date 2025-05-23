@@ -11,6 +11,9 @@ class AuthService {
   static register(payload: IRegisterPayload): Promise<GenericResponse<IUser>> {
     return HttpServer.post<GenericResponse<IUser>>("auth/register", payload);
   }
+  static logout(): Promise<GenericResponse<IUser>> {
+    return HttpServer.post<GenericResponse<IUser>>("auth/logout");
+  }
 
   static refreshMe(): Promise<GenericResponse<IUser>> {
     return HttpServer.get<GenericResponse<IUser>>("auth/refreshMe");

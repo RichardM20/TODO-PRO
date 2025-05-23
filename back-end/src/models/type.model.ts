@@ -2,10 +2,6 @@ import { IType } from "@/types/type.types";
 import { model, Schema } from "mongoose";
 
 const typeSchema = new Schema<IType>({
-  id: {
-    type: String,
-    required: true,
-  },
   userId: {
     type: String,
     required: true,

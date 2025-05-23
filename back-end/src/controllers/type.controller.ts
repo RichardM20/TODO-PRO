@@ -1,35 +1,26 @@
 import { Response } from "express";
 
-import { ApiError } from "@utils/errors/api_errors";
-import { HttpBadResponse, HttpResponse } from "@utils/http_response";
 
-import logger from "@utils/logger";
+import TypeService from "@services/type.service";
 import { AuthRequest } from "types/auth.type";
-import TypeService from "../services/type.service";
-import { IType } from "../types/type.types";
+import { IType } from "types/type.types";
+import BaseController from "./base.controller";
 
-class TypeController {
+class TypeController extends BaseController {
   private typeService: TypeService;
 
   constructor(typeService: TypeService) {
+    super();
     this.typeService = typeService;
   }
 
   async getTypes(req: AuthRequest, res: Response) {
     const uid = req.uid;
 
-    try {
+    await this.executeAction(res, async () => {
       const types = await this.typeService.getTypes(uid!);
-
-      HttpResponse(res, 200, "sucess", types);
-    } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, error, null);
-      }
-    }
+      this.handleResponse(res, 200, "success", types);
+    });
   }
 
   async addType(req: AuthRequest, res: Response) {
@@ -37,17 +28,10 @@ class TypeController {
 
     const userId = req.uid ?? "";
 
-    try {
+    await this.executeAction(res, async () => {
       await this.typeService.addType(userId, type);
-      HttpResponse(res, 200, "sucess", true);
-    } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, error, null);
-      }
-    }
+      this.handleResponse(res, 200, "sucess", true);
+    });
   }
 }
 

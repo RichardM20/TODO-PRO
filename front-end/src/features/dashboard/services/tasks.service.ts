@@ -14,6 +14,10 @@ class TasksService {
   updateTask(task: ITask): Promise<GenericResponse<boolean>> {
     return HttpServer.put<GenericResponse<boolean>>(`tasks/${task.id}`, task);
   }
+
+  deleteTask(taskId: string): Promise<GenericResponse<boolean>> {
+    return HttpServer.delete<GenericResponse<boolean>>(`tasks/${taskId}`);
+  }
 }
 
 export default new TasksService();

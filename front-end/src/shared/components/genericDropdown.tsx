@@ -32,7 +32,7 @@ const GenericDropdown = ({
       </button>
 
       {isOpen && (
-        <ul className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+        <ul className="absolute z-50 left-0 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
           {types.map((tag) => (
             <li
               key={tag.id}

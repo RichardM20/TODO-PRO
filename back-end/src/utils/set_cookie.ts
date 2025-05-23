@@ -10,3 +10,12 @@ export const setTokenCookie = (res: Response, token: string) => {
     maxAge: 3600000,
   });
 };
+
+export function clearTokenCookie(res: Response) {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+  });
+}

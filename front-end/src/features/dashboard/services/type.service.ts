@@ -8,7 +8,7 @@ class TypeServices {
   }
 
   addType(type: IType): Promise<GenericResponse<boolean>> {
-    return HttpServer.post<GenericResponse<boolean>>("types", { type });
+    return HttpServer.post<GenericResponse<boolean>>("types", type);
   }
 }
 

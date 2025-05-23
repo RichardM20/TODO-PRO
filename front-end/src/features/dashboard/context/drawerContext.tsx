@@ -8,12 +8,10 @@ const DashboardContext = createContext<DrawerContextType | undefined>(undefined)
 
 export const DashboardProvider = ({ children }: { children: ReactNode }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [indexView, setIndexView] = useState<number>(0);
+
 
   const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
   const closeDrawer = () => setIsDrawerOpen(false);
-
-  const onChangeView = (index: number) => setIndexView(index);
 
   return (
     <DashboardContext.Provider
@@ -21,8 +19,6 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
         isDrawerOpen,
         toggleDrawer,
         closeDrawer,
-        onChangeView,
-        indexView,
       }}
     >
       {children}

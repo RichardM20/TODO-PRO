@@ -38,8 +38,6 @@ export type DrawerContextType = {
   isDrawerOpen: boolean;
   toggleDrawer: () => void;
   closeDrawer: () => void;
-  onChangeView:(index:number)=>void;
-  indexView: number;
 };
 
 export interface IDrawerIconProps {

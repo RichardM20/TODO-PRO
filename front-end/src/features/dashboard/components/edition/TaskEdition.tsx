@@ -11,9 +11,13 @@ import { ITaskContentEditionProps } from "@features/dashboard/types/taskEdition.
 import SimpleButton from "@shared/components/buttons/SimpleButton";
 import GenericDropdown from "@shared/components/GenericDropdown";
 
+import Toast from "../../../../shared/components/toast/Toast";
+
 const TaskContentEdition = (props: ITaskContentEditionProps) => {
   const [content, setContent] = useState("");
   const [originalContent, setOriginalContent] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const [type, setType] = useState<IType | undefined>(
     props.task?.type ?? undefined
   );
@@ -66,6 +70,9 @@ const TaskContentEdition = (props: ITaskContentEditionProps) => {
     if (content === originalContent) return;
     if (type) {
       props.onSave(content, type);
+    } else {
+      setToastMessage("Please select a type");
+      setShowToast(true);
     }
   };
 
@@ -78,49 +85,50 @@ const TaskContentEdition = (props: ITaskContentEditionProps) => {
 
   return (
     <div
-      className={`fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out ${
-        props.isLoading ? "opacity-0" : "opacity-100"
+      className={`fixed inset-0 bg-gray-500 bg-opacity-50 z-50 transition-opacity duration-300 ease-in-out ${
+        props.isLoading ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
-      <div
-        className={`w-full max-w-max mx-auto p-4 bg-white rounded-xl transition-transform duration-300 ease-in-out ${
-          props.isLoading ? "scale-95" : "scale-100"
-        }`}
-      >
-        <div className="relative">
-          {props.isLoading && (
-            <div className="absolute inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-10"></div>
+      <div className="w-full h-full bg-white flex flex-col">
+        <div className="max-w-5xl w-full mx-auto flex flex-col flex-grow p-6">
+          <div className="flex flex-col max-h-[800px] overflow-y-auto flex-grow">
+            <div ref={editorRef} className="min-h-40 mb-6" />
+          </div>
+
+          {props.types && (
+            <div className="pb-4 relative z-50">
+              <GenericDropdown
+                defaultValue={props.task?.type}
+                onSelect={handleOnChangeType}
+                types={props.types}
+              />
+            </div>
           )}
-          <div className="bg-white border border-gray-100 rounded-xl p-4">
-            <div ref={editorRef} className="min-h-34 mb-4"></div>
-            {props.types && (
-              <div className="flex flex-row mt-4 gap-4">
-                <GenericDropdown
-                  defaultValue={props.task?.type}
-                  onSelect={handleOnChangeType}
-                  types={props.types}
-                />
-              </div>
-            )}
+
+          <div className="border-t border-gray-200 mt-4 pt-4 flex justify-end gap-4">
+            <SimpleButton
+              buttonText="Save changes"
+              buttonTextLoading="Saving..."
+              isLoading={props.isLoading}
+              disabled={props.isLoading || content === originalContent}
+              onClick={handleOnClick}
+            />
+            <SimpleButton
+              buttonText="Cancel"
+              variant="outlined"
+              onClick={handleCloseModal}
+              disabled={false}
+            />
           </div>
         </div>
-
-        <div className="mt-4 flex flex-row gap-4 justify-end">
-          <SimpleButton
-            buttonText="Save changes"
-            buttonTextLoading="Saving..."
-            isLoading={props.isLoading}
-            disabled={props.isLoading || content === originalContent}
-            onClick={handleOnClick}
-          />
-          <button
-            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-            onClick={handleCloseModal}
-          >
-            Cancel
-          </button>
-        </div>
       </div>
+      <Toast
+        isVisible={showToast}
+        title="Action required"
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        type="warning"
+      />
     </div>
   );
 };

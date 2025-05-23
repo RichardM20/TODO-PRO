@@ -27,9 +27,12 @@ export interface ITaskContextType {
   activeFilter: TaskFilterType;
   refreshTasks: () => Promise<ITask[] | null>;
   refreshTypes: () => Promise<IType[] | null>;
-  addTask: (task: ITask) => Promise<boolean>;
-  updateTask: (task: ITask) => Promise<boolean>;
+  addTask: (task: ITask) => Promise<void>;
+  addType: (type: IType) => Promise<void>;
+  updateTask: (task: ITask) => Promise<void>;
+  deleteTask: (taskId: string) => Promise<void>;
   changeFilter: (filter: TaskFilterType) => void;
 }
 
 export type TaskFilterType = "all" | "today" | "week";
+export type TaskListFilterType = "date-asc" | "date-desc";

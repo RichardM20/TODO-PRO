@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import useAuth from "./useAuth.hook";
 
@@ -12,22 +12,22 @@ export default function useRedirectIfAuthenticated(
   const router = useRouter();
   const [isLogged, setIsLogged] = useState(true);
 
+  const checkAuth = useCallback(async () => {
+    const authenticated = await getUser();
+    setIsLogged(authenticated);
+
+    if (authenticated && redirectIfAuthenticated) {
+      router.replace(redirectTo);
+    }
+
+    if (!authenticated && !redirectIfAuthenticated) {
+      router.replace(redirectTo);
+    }
+  }, [getUser, redirectIfAuthenticated, redirectTo, router]);
+
   useEffect(() => {
-    const checkAuth = async () => {
-      const authenticated = await getUser();
-      setIsLogged(authenticated);
-
-      if (authenticated && redirectIfAuthenticated) {
-        router.replace(redirectTo);
-      }
-
-      if (!authenticated && !redirectIfAuthenticated) {
-        router.replace(redirectTo);
-      }
-    };
-
     checkAuth();
-  }, [getUser, redirectTo, redirectIfAuthenticated, router]);
+  }, [checkAuth]);
 
   return {
     isLoading: isLoadingProfile,

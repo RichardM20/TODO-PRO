@@ -1,9 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { useCallback } from "react";
 
 import AuthService from "@auth/services/auth.service";
 import { ILoginPayload, IRegisterPayload } from "@auth/types/auth.type";
+import handleAsyncAction from "@dashboard/utils/async_action";
 import { useAuthContext } from "@features/auth/context/authContext";
 import { useAsyncState } from "@shared/hooks/useAsyncState";
 
@@ -12,37 +15,35 @@ const useAuth = () => {
   const registerState = useAsyncState<void>();
   const profileState = useAsyncState<void>();
 
+  const router = useRouter();
   const { setUserLogged } = useAuthContext();
 
-  const login = async (payload: ILoginPayload) => {
-    loginState.setIsLoading(true);
-    loginState.setError("");
-    try {
-      const user = await AuthService.login(payload);
-      if (user.data) {
-        const userData = user.data;
-
-        setUserLogged(userData);
+  const login = (payload: ILoginPayload) =>
+    handleAsyncAction(
+      () => AuthService.login(payload),
+      loginState.setIsLoading,
+      loginState.setError,
+      (user) => {
+        if (user?.data) {
+          setUserLogged(user.data);
+        }
       }
-    } catch (err) {
-      loginState.setError("Error logging in");
-      throw err;
-    } finally {
-      loginState.setIsLoading(false);
-    }
-  };
+    );
 
-  const register = async (payload: IRegisterPayload) => {
-    registerState.setIsLoading(true);
-    registerState.setError("");
-    try {
-      await AuthService.register(payload);
-    } catch {
-      registerState.setError("Error registering");
-    } finally {
-      registerState.setIsLoading(false);
-    }
-  };
+  const register = (payload: IRegisterPayload) =>
+    handleAsyncAction(
+      () => AuthService.register(payload),
+      registerState.setIsLoading,
+      registerState.setError
+    );
+
+  const logout = () =>
+    handleAsyncAction(
+      () => AuthService.logout(),
+      registerState.setIsLoading,
+      registerState.setError,
+      () => router.replace("/login")
+    );
 
   const getUser = useCallback(async () => {
     profileState.setIsLoading(true);
@@ -59,11 +60,12 @@ const useAuth = () => {
     } finally {
       profileState.setIsLoading(false);
     }
-  }, [profileState, setUserLogged]);
+  }, []);
 
   return {
     login,
     register,
+    logout,
     isLoadingLogin: loginState.isLoading,
     isLoadingRegister: registerState.isLoading,
     errorLogin: loginState.error,

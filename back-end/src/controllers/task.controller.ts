@@ -1,16 +1,14 @@
-import { Response } from "express";
-
 import TasksService from "@services/task.service";
-import { ApiError } from "@utils/errors/api_errors";
-import { HttpBadResponse, HttpResponse } from "@utils/http_response";
-import logger from "@utils/logger";
+import { Response } from "express";
 import { AuthRequest } from "types/auth.type";
 import { ITask } from "types/task.type";
+import BaseController from "./base.controller";
 
-class TasksController {
+class TasksController extends BaseController {
   private tasksService: TasksService;
 
   constructor(tasksService: TasksService) {
+    super();
     this.tasksService = tasksService;
   }
 
@@ -18,57 +16,34 @@ class TasksController {
     const uid = req.uid;
     const { limit = 100, offset = 0 } = req.params;
 
-    try {
+    await this.executeAction(res, async () => {
       const tasks = await this.tasksService.getTasks(
         uid!,
         Number(limit),
         Number(offset)
       );
-
-      HttpResponse(res, 200, "sucess", tasks);
-    } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, error, null);
-      }
-    }
+      this.handleResponse(res, 200, "success", tasks);
+    });
   }
 
   async addTasks(req: AuthRequest, res: Response) {
     const tasks: ITask = req.body;
-
     const userId = req.uid ?? "";
 
-    try {
+    await this.executeAction(res, async () => {
       await this.tasksService.addTasks(userId, tasks);
-      HttpResponse(res, 200, "sucess", true);
-    } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, error, null);
-      }
-    }
+      this.handleResponse(res, 200, "success", true);
+    });
   }
 
   async deleteTask(req: AuthRequest, res: Response) {
     const { id } = req.params;
     const userId = req.uid ?? "";
 
-    try {
+    await this.executeAction(res, async () => {
       await this.tasksService.deleteTask(userId, id);
-      HttpResponse(res, 200, "sucess", true);
-    } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, error, null);
-      }
-    }
+      this.handleResponse(res, 200, "success", true);
+    });
   }
 
   async updateTask(req: AuthRequest, res: Response) {
@@ -76,17 +51,10 @@ class TasksController {
     const userId = req.uid ?? "";
     const task: ITask = req.body;
 
-    try {
+    await this.executeAction(res, async () => {
       await this.tasksService.updateTask(userId, id, task);
-      HttpResponse(res, 200, "sucess", true);
-    } catch (error) {
-      logger.error(error);
-      if (error instanceof ApiError) {
-        HttpBadResponse(res, error.statusCode, error.message, null);
-      } else {
-        HttpBadResponse(res, 500, error, null);
-      }
-    }
+      this.handleResponse(res, 200, "success", true);
+    });
   }
 }
 

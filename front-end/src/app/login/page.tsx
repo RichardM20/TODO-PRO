@@ -1,7 +1,7 @@
 "use client";
 
 import LoginForm from "@auth/components/LoginForm";
-import useRedirectIfAuthenticated from "@features/auth/hooks/useRedirect.hook";
+import useRedirectIfAuthenticated from "@auth/hooks/useRedirect.hook";
 import LoadingContainer from "@shared/components/LoadingContainer";
 
 const LoginPage = () => {
