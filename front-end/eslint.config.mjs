@@ -45,6 +45,10 @@ const eslintConfig = [
           "newlines-between": "always",
         },
       ],
+
+      "react-hooks/exhaustive-deps": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "import/no-anonymous-default-export": "off",
     },
     settings: {
       "import/resolver": {

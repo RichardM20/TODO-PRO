@@ -1,14 +1,13 @@
-"use client";
-
 import { createContext, ReactNode, useContext, useState } from "react";
 
 import { DrawerContextType } from "@dashboard/types/drawer.type";
 
-const DashboardContext = createContext<DrawerContextType | undefined>(undefined);
+const DashboardContext = createContext<DrawerContextType | undefined>(
+  undefined
+);
 
 export const DashboardProvider = ({ children }: { children: ReactNode }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
 
   const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
   const closeDrawer = () => setIsDrawerOpen(false);

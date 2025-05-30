@@ -1,17 +1,13 @@
 "use client";
 
-// eslint-disable-next-line import/order
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
-
 import { useEffect, useRef, useState } from "react";
 
 import { IType } from "@dashboard/types/type.type";
 import { ITaskContentEditionProps } from "@features/dashboard/types/taskEdition.type";
 import SimpleButton from "@shared/components/buttons/SimpleButton";
 import GenericDropdown from "@shared/components/GenericDropdown";
-
-import Toast from "../../../../shared/components/toast/Toast";
+import Toast from "@shared/components/toast/Toast";
+import "quill/dist/quill.snow.css";
 
 const TaskContentEdition = (props: ITaskContentEditionProps) => {
   const [content, setContent] = useState("");
@@ -22,39 +18,44 @@ const TaskContentEdition = (props: ITaskContentEditionProps) => {
     props.task?.type ?? undefined
   );
   const editorRef = useRef<HTMLDivElement>(null);
-  const quillRef = useRef<Quill | null>(null);
+  const quillRef = useRef<any>(null);
 
   useEffect(() => {
-    if (editorRef.current && !quillRef.current && props.isModalVisible) {
-      const quill = new Quill(editorRef.current, {
-        theme: "snow",
-        modules: {
-          toolbar: {
-            container: [
-              [{ header: [1, 2, 3, false] }],
-              ["bold", "italic", "underline", "strike"],
-              [{ color: [] }, { background: [] }],
-              [{ align: [] }],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["link"],
-              ["clean"],
-            ],
+    if (!props.isModalVisible) return;
+
+    if (editorRef.current && !quillRef.current) {
+      import("quill").then((QuillModule) => {
+        const Quill = QuillModule.default;
+        const quill = new Quill(editorRef.current!, {
+          theme: "snow",
+          modules: {
+            toolbar: {
+              container: [
+                [{ header: [1, 2, 3, false] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ color: [] }, { background: [] }],
+                [{ align: [] }],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link"],
+                ["clean"],
+              ],
+            },
           },
-        },
-        placeholder: "Write here",
+          placeholder: "Write here",
+        });
+
+        if (props.task?.content) {
+          quill.clipboard.dangerouslyPasteHTML(props.task.content);
+          setOriginalContent(props.task.content);
+          setContent(props.task.content);
+        }
+
+        quill.on("text-change", () => {
+          setContent(quill.root.innerHTML);
+        });
+
+        quillRef.current = quill;
       });
-
-      if (props.task?.content) {
-        quill.clipboard.dangerouslyPasteHTML(props.task.content);
-        setOriginalContent(props.task.content);
-        setContent(props.task.content);
-      }
-
-      quill.on("text-change", () => {
-        setContent(quill.root.innerHTML);
-      });
-
-      quillRef.current = quill;
     }
 
     return () => {

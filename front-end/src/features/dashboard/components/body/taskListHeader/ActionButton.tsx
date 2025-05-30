@@ -1,3 +1,5 @@
+"use client";
+
 import { LucideIcon } from "lucide-react";
 import React from "react";
 
@@ -32,11 +34,10 @@ const ActionButton: React.FC<ActionButtonProps> = ({
     }
   };
 
-  const baseClasses = "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors cursor-pointer";
+  const baseClasses =
+    "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors cursor-pointer";
   const variantClasses = getVariantClasses();
-  const disabledClasses = disabled
-    ? "opacity-50 cursor-not-allowed"
-    : "";
+  const disabledClasses = disabled ? "opacity-50 cursor-not-allowed" : "";
   const borderClasses = variant === "success" ? "" : "border";
 
   return (

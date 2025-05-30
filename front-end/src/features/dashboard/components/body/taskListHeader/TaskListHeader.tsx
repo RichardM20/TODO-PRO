@@ -1,3 +1,5 @@
+"use client";
+
 import { Check, Filter, Trash2, X } from "lucide-react";
 import { useState } from "react";
 
@@ -7,7 +9,6 @@ import { filterDataListOptions } from "@dashboard/utils/filter";
 
 import ActionButton from "./ActionButton";
 
-
 const TaskListHeader = (props: ITaskListHeaderProps) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
 
@@ -16,14 +17,17 @@ const TaskListHeader = (props: ITaskListHeaderProps) => {
       <h1 className="text-2xl font-bold">TODO PRO</h1>
 
       <div className="flex items-center gap-3 mt-4 sm:mt-0">
-
         <div className="relative">
           <ActionButton
             onClick={() => setShowFilterMenu(!showFilterMenu)}
             icon={Filter}
             variant="default"
           >
-            {filterDataListOptions.find((opt) => opt.value === props.activeFilter)?.label}
+            {
+              filterDataListOptions.find(
+                (opt) => opt.value === props.activeFilter
+              )?.label
+            }
           </ActionButton>
 
           {showFilterMenu && (

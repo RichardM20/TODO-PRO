@@ -11,7 +11,10 @@ import AuthForm from "./AuthForm/AuthForm";
      <AuthForm
        type="login"
        title="Login"
-       onSubmit={login}
+       onSubmit={async (formData) => {
+         const { email, password } = formData;
+         await login({ email, password });
+       }}
        isLoading={isLoadingLogin}
        error={errorLogin}
        buttonText="Login"

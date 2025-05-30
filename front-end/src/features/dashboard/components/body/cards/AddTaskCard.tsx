@@ -1,3 +1,5 @@
+"use client";
+
 import { IAddTaskCard } from "@dashboard/types/taskCard.type";
 
 const AddTaskCard = (props: IAddTaskCard) => {
