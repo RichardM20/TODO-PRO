@@ -3,11 +3,12 @@
 import ProtectedRoute from "@auth/components/ProtectedRoute";
 import DrawerToggleIcon from "@dashboard/components/drawer/components/DrawerIcon";
 import Drawer from "@dashboard/components/drawer/Drawer";
+import { TaskProvider } from "@dashboard/context/tasksContetext";
 import {
   DashboardProvider,
   useDashboardContext,
-} from "@dashboard/context/drawerContext";
-import { TaskProvider } from "@dashboard/context/tasksContetext";
+} from "@features/dashboard/context/drawerContext";
+
 
 export default function DashboardLayout({
   children,

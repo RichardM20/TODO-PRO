@@ -58,15 +58,6 @@ TODO-PRO/
 └── ...
 ```
 
-## 📌 Features
-
-- 🔐 **JWT Authentication** — Secure user login and session handling.
-- 📝 **Notes Management** — Create, edit, and delete your personal notes.
-- 🎨 **Modern UI** — Clean, responsive design built with Tailwind CSS.
-- 🌐 **TypeScript Support** — Full-stack type safety (frontend & backend).
-- 🗂️ **Organized Codebase** — Clear separation between frontend and backend.
-- 🛡️ **Protected Routes** — Access control for authenticated users only.
-- ⚙️ **Environment Variables** — Easy config for dev and production.
 
 ## 🚀 Getting Started
 
