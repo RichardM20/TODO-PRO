@@ -2,10 +2,10 @@
 
 import { Check } from "lucide-react";
 
-import { ITask } from "@dashboard/types/task.type";
-import { getCardColor } from "@dashboard/utils/colors";
-import ErrorContainer from "@shared/components/ErrorContainer";
 
+import ErrorContainer from "../../../../../shared/components/ErrorContainer";
+import { ITask } from "../../../types/task.type";
+import { getCardColor } from "../../../utils/colors";
 import AddTaskCard from "../cards/AddTaskCard";
 import TaskCard from "../cards/TaskCard";
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { IDrawerSectionProps } from "@dashboard/types/drawer.type";
+import { IDrawerSectionProps } from "../../../types/drawer.type";
+
 
 const DrawerSection = (props: IDrawerSectionProps) => {
   return (

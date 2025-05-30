@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
-import { DrawerContextType } from "@dashboard/types/drawer.type";
+import { DrawerContextType } from "../types/drawer.type";
 
 const DashboardContext = createContext<DrawerContextType | undefined>(
   undefined

@@ -18,15 +18,8 @@
         "name": "next"
       }
     ],
-    "baseUrl": "./src",
-    "paths": {
-      "@app/*": ["app/*"],
-      "@core/*": ["core/*"],
-      "@features/*": ["features/*"],
-      "@auth/*": ["features/auth/*"],
-      "@dashboard/*": ["features/dashboard/*"],
-      "@shared/*": ["shared/*"]
-    },
+    "baseUrl": ".",
+
     "forceConsistentCasingInFileNames": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

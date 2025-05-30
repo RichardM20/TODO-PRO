@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 
-import { useTaskContext } from "@dashboard/context/tasksContetext";
-import { ITask, TaskListFilterType } from "@dashboard/types/task.type";
+import { useTaskContext } from "../context/tasksContetext";
+import { ITask, TaskListFilterType } from "../types/task.type";
 
 export const useTaskData = () => {
   const {

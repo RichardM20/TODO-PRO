@@ -1,7 +1,8 @@
 import { AlertCircle, AlertTriangle, Check, Info, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { IToastItemProps } from "@shared/types/toast.type";
+import { IToastItemProps } from "../../types/toast.type";
+
 
 const Toast = ({
   title,

@@ -1,4 +1,4 @@
-import { ITask, TaskFilterType } from "@dashboard/types/task.type";
+import { ITask, TaskFilterType } from "../types/task.type";
 
 export const filterTasks = (
   tasks: ITask[] = [],
@@ -42,8 +42,7 @@ export const filterTasks = (
   }
 };
 
-
-  export const filterDataListOptions = [
-    { value: "date-asc", label: "Oldest first" },
-    { value: "date-desc", label: "Newest first" },
-  ];
+export const filterDataListOptions = [
+  { value: "date-asc", label: "Oldest first" },
+  { value: "date-desc", label: "Newest first" },
+];

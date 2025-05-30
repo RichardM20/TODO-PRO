@@ -2,7 +2,8 @@
 
 import { Plus } from "lucide-react";
 
-import { IDrawerAddItemProps } from "@dashboard/types/drawer.type";
+
+import { IDrawerAddItemProps } from "../../../types/drawer.type";
 
 import DrawerItem from "./DrawerItem";
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { useTaskContext } from "@dashboard/context/tasksContetext";
+import { useTaskContext } from "../context/tasksContetext";
+
 
 export const useTypeData = () => {
   const { types, isLoadingTypes, typeError, refreshTypes, addType } =

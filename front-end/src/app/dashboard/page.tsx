@@ -1,6 +1,6 @@
 "use client";
 
-import DashboardClient from "@dashboard/components/DashboardClient";
+import DashboardClient from "../../features/dashboard/components/DashboardClient";
 
 const DashboardPage = () => {
   return <DashboardClient />;

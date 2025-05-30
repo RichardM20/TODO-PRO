@@ -2,8 +2,9 @@
 
 import { createContext, useContext, useState } from "react";
 
-import { AuthContextType } from "@auth/types/auth.type";
-import { IUser } from "@features/auth/types/user.type";
+import { AuthContextType } from "../types/auth.type";
+import { IUser } from "../types/user.type";
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

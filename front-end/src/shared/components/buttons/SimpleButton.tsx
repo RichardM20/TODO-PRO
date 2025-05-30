@@ -1,6 +1,7 @@
 "use client";
 
-import { ILoadingButtonProps } from "@shared/types/loadingButton.type";
+import { ILoadingButtonProps } from "../../types/loadingButton.type";
+
 
 const SimpleButton = ({
   isLoading = false,

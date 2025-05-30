@@ -3,11 +3,12 @@ import { useRouter } from "next/navigation";
 
 import { ChangeEvent, FormEvent, useState } from "react";
 
-import { IAuthFormProps } from "@auth/types/form.type";
-import SimpleButton from "@shared/components/buttons/SimpleButton";
-import ErrorContainer from "@shared/components/ErrorContainer";
-import InputField from "@shared/components/inputs/FieldForm";
-import { emailRegex } from "@shared/utils/validEmail";
+
+import SimpleButton from "../../../../shared/components/buttons/SimpleButton";
+import ErrorContainer from "../../../../shared/components/ErrorContainer";
+import InputField from "../../../../shared/components/inputs/FieldForm";
+import { emailRegex } from "../../../../shared/utils/validEmail";
+import { IAuthFormProps } from "../../types/form.type";
 
 import AuthBottomLink from "./AuthBottomLink";
 

@@ -4,11 +4,13 @@ import { useRouter } from "next/navigation";
 
 import { useCallback } from "react";
 
-import AuthService from "@auth/services/auth.service";
-import { ILoginPayload, IRegisterPayload } from "@auth/types/auth.type";
-import handleAsyncAction from "@dashboard/utils/async_action";
-import { useAuthContext } from "@features/auth/context/authContext";
-import { useAsyncState } from "@shared/hooks/useAsyncState";
+import { useAsyncState } from "../../../shared/hooks/useAsyncState";
+import handleAsyncAction from "../../dashboard/utils/async_action";
+import { useAuthContext } from "../context/authContext";
+import AuthService from "../services/auth.service";
+import { ILoginPayload, IRegisterPayload } from "../types/auth.type";
+
+
 
 const useAuth = () => {
   const loginState = useAsyncState<void>();

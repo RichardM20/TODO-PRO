@@ -1,7 +1,7 @@
-import { ILoginPayload, IRegisterPayload } from "@auth/types/auth.type";
-import { IUser } from "@auth/types/user.type";
-import HttpServer from "@core/httpServer";
-import { GenericResponse } from "@shared/types/response.type";
+import HttpServer from "../../../core/httpServer";
+import { GenericResponse } from "../../../shared/types/response.type";
+import { ILoginPayload, IRegisterPayload } from "../types/auth.type";
+import { IUser } from "../types/user.type";
 
 class AuthService {
   static login(payload: ILoginPayload): Promise<GenericResponse<IUser>> {

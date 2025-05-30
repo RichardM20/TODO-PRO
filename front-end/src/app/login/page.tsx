@@ -1,8 +1,9 @@
 "use client";
 
-import LoginForm from "@auth/components/LoginForm";
-import useRedirectIfAuthenticated from "@auth/hooks/useRedirect.hook";
-import LoadingContainer from "@shared/components/LoadingContainer";
+import LoginForm from "../../features/auth/components/LoginForm";
+import useRedirectIfAuthenticated from "../../features/auth/hooks/useRedirect.hook";
+import LoadingContainer from "../../shared/components/LoadingContainer";
+
 
 const LoginPage = () => {
   const { isLoading, isLogged } = useRedirectIfAuthenticated("/dashboard");

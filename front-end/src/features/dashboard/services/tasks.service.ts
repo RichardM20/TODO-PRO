@@ -1,6 +1,6 @@
-import HttpServer from "@core/httpServer";
-import { ITask, ITasksPaginated } from "@dashboard/types/task.type";
-import { GenericResponse } from "@shared/types/response.type";
+import HttpServer from "../../../core/httpServer";
+import { GenericResponse } from "../../../shared/types/response.type";
+import { ITask, ITasksPaginated } from "../types/task.type";
 
 class TasksService {
   getAllTasks(): Promise<GenericResponse<ITasksPaginated>> {

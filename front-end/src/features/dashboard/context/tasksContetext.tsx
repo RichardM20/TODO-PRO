@@ -10,18 +10,14 @@ import {
   useState,
 } from "react";
 
-import TasksService from "@dashboard/services/tasks.service";
-import TypeServices from "@dashboard/services/type.service";
-import {
-  ITask,
-  ITaskContextType,
-  TaskFilterType,
-} from "@dashboard/types/task.type";
-import { IType } from "@dashboard/types/type.type";
-import { filterTasks } from "@dashboard/utils/filter";
-import { useAsyncState } from "@shared/hooks/useAsyncState";
 
+import { useAsyncState } from "../../../shared/hooks/useAsyncState";
+import TasksService from "../services/tasks.service";
+import TypeServices from "../services/type.service";
+import { ITask, ITaskContextType, TaskFilterType } from "../types/task.type";
+import { IType } from "../types/type.type";
 import handleAsyncAction from "../utils/async_action";
+import { filterTasks } from "../utils/filter";
 
 const TaskContext = createContext<ITaskContextType | undefined>(undefined);
 

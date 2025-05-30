@@ -3,18 +3,19 @@
 import { Check, ClipboardList, LogOut, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { useAuthContext } from "@auth/context/authContext";
-import useAuth from "@auth/hooks/useAuth.hook";
-import { useDashboardContext } from "@dashboard/context/drawerContext";
-import { useTaskData } from "@dashboard/hooks/useTask";
-import { useTypeData } from "@dashboard/hooks/useTypes";
-import { IDrawerProps } from "@dashboard/types/drawer.type";
-import { TaskFilterType } from "@dashboard/types/task.type";
-import { getTypeColor } from "@dashboard/utils/colors";
-import { DRAWER_ITEMS } from "@shared/constants/drawer_items";
+
 
 import InputField from "../../../../shared/components/inputs/FieldForm";
 import Toast from "../../../../shared/components/toast/Toast";
+import { DRAWER_ITEMS } from "../../../../shared/constants/drawer_items";
+import { useAuthContext } from "../../../auth/context/authContext";
+import useAuth from "../../../auth/hooks/useAuth.hook";
+import { useDashboardContext } from "../../context/drawerContext";
+import { useTaskData } from "../../hooks/useTask";
+import { useTypeData } from "../../hooks/useTypes";
+import { IDrawerProps } from "../../types/drawer.type";
+import { TaskFilterType } from "../../types/task.type";
+import { getTypeColor } from "../../utils/colors";
 
 import DrawerAddItem from "./components/DrawerAddItem";
 import DrawerItem from "./components/DrawerItem";
@@ -79,6 +80,7 @@ const Drawer = ({ className }: IDrawerProps) => {
   if (isLoading) {
     return <></>;
   }
+
   return (
     <div className={`h-full bg-white border-r border-gray-50 ${className}`}>
       <div className="flex items-center justify-between p-4 border-b border-gray-200">

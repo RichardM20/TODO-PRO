@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 
-import { IDrawerItemProps } from "@dashboard/types/drawer.type";
-import { cn } from "@shared/utils/cn";
+import { cn } from "../../../../../shared/utils/cn";
+import { IDrawerItemProps } from "../../../types/drawer.type";
 
 const DrawerItem = ({
   icon,

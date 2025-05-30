@@ -2,8 +2,9 @@
 
 import DOMPurify from "isomorphic-dompurify";
 
-import { ITaskCardProps } from "@dashboard/types/taskCard.type";
-import { formatDateTo24Hrs } from "@shared/utils/dateformat";
+import { formatDateTo24Hrs } from "../../../../../shared/utils/dateformat";
+import { ITaskCardProps } from "../../../types/taskCard.type";
+
 
 const TaskCard = (props: ITaskCardProps) => {
   let sizeClasses = "w-full h-full";

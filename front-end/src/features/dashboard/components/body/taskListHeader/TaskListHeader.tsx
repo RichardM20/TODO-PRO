@@ -3,9 +3,9 @@
 import { Check, Filter, Trash2, X } from "lucide-react";
 import { useState } from "react";
 
-import { TaskListFilterType } from "@dashboard/types/task.type";
-import { ITaskListHeaderProps } from "@dashboard/types/taskList.type";
-import { filterDataListOptions } from "@dashboard/utils/filter";
+import { TaskListFilterType } from "../../../types/task.type";
+import { ITaskListHeaderProps } from "../../../types/taskList.type";
+import { filterDataListOptions } from "../../../utils/filter";
 
 import ActionButton from "./ActionButton";
 

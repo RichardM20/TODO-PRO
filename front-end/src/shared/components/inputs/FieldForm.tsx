@@ -1,4 +1,4 @@
-import { IInputFieldProps } from "@shared/types/inputField.type";
+import { IInputFieldProps } from "../../types/inputField.type";
 
 const InputField = (data: IInputFieldProps) => {
   return (

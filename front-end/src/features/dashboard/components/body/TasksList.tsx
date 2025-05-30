@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 
+
+import Toast from "../../../../shared/components/toast/Toast";
 import {
   useDeleteMode,
   useTaskData,
   useTaskFilters,
-} from "@dashboard/hooks/useTask";
-import { useTypeData } from "@dashboard/hooks/useTypes";
-import { ITask } from "@dashboard/types/task.type";
-import { IType } from "@dashboard/types/type.type";
-
-import Toast from "../../../../shared/components/toast/Toast";
+} from "../../hooks/useTask";
+import { useTypeData } from "../../hooks/useTypes";
+import { ITask } from "../../types/task.type";
+import { IType } from "../../types/type.type";
 import TaskContentEdition from "../edition/TaskEdition";
 
 import TaskGrid from "./taskGrid/TaskGrid";

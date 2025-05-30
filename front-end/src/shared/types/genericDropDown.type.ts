@@ -1,8 +1,8 @@
-import { IType } from "@dashboard/types/type.type";
+import { IType } from "../../features/dashboard/types/type.type";
 
 export interface IGenericDropdown {
-  types: IType[] ;
+  types: IType[];
   onSelect: (type: IType) => void;
   placeholder?: string;
-  defaultValue?: IType | null
+  defaultValue?: IType | null;
 }

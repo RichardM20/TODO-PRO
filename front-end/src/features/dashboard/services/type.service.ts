@@ -1,6 +1,6 @@
-import HttpServer from "@core/httpServer";
-import { IType } from "@dashboard/types/type.type";
-import { GenericResponse } from "@shared/types/response.type";
+import HttpServer from "../../../core/httpServer";
+import { GenericResponse } from "../../../shared/types/response.type";
+import { IType } from "../types/type.type";
 
 class TypeServices {
   getAllTypes(): Promise<GenericResponse<IType[]>> {

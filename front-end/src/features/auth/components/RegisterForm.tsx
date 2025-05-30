@@ -1,7 +1,7 @@
 "use client";
 
-import useAuth from "@auth/hooks/useAuth.hook";
 
+import useAuth from "../hooks/useAuth.hook";
 import { IRegisterPayload } from "../types/auth.type";
 
 import AuthForm from "./AuthForm/AuthForm";

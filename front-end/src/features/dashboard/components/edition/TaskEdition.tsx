@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { IType } from "@dashboard/types/type.type";
-import { ITaskContentEditionProps } from "@features/dashboard/types/taskEdition.type";
-import SimpleButton from "@shared/components/buttons/SimpleButton";
-import GenericDropdown from "@shared/components/GenericDropdown";
-import Toast from "@shared/components/toast/Toast";
+
 import "quill/dist/quill.snow.css";
+import SimpleButton from "../../../../shared/components/buttons/SimpleButton";
+import GenericDropdown from "../../../../shared/components/GenericDropdown";
+import Toast from "../../../../shared/components/toast/Toast";
+import { ITaskContentEditionProps } from "../../types/taskEdition.type";
+import { IType } from "../../types/type.type";
 
 const TaskContentEdition = (props: ITaskContentEditionProps) => {
   const [content, setContent] = useState("");
