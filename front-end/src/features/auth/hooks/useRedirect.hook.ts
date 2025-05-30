@@ -8,8 +8,8 @@ export default function useRedirectIfAuthenticated(
   redirectTo: string,
   redirectIfAuthenticated: boolean = true
 ) {
-  const { getUser, isLoadingProfile } = useAuth();
-  const router = useRouter();
+   const router = useRouter();
+   const { getUser, isLoadingProfile } = useAuth();
   const [isLogged, setIsLogged] = useState(true);
 
   const checkAuth = useCallback(async () => {

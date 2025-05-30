@@ -37,7 +37,6 @@ const validateJWT = async (
     req.uid = uid;
 
     const user = await User.findById(uid);
-
     if (!user) {
       return HttpBadResponse(
         res,

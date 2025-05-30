@@ -1,3 +1,5 @@
+"use client";
+
 import RegisterForm from "@auth/components/RegisterForm";
 import useRedirectIfAuthenticated from "@features/auth/hooks/useRedirect.hook";
 import LoadingContainer from "@shared/components/LoadingContainer";

@@ -1,13 +1,13 @@
 "use client";
 
+import ProtectedRoute from "@auth/components/ProtectedRoute";
 import DrawerToggleIcon from "@dashboard/components/drawer/components/DrawerIcon";
 import Drawer from "@dashboard/components/drawer/Drawer";
-import { TaskProvider } from "@dashboard/context/tasksContetext";
 import {
   DashboardProvider,
   useDashboardContext,
-} from "@features/dashboard/context/drawerContext";
-
+} from "@dashboard/context/drawerContext";
+import { TaskProvider } from "@dashboard/context/tasksContetext";
 
 export default function DashboardLayout({
   children,
@@ -17,7 +17,9 @@ export default function DashboardLayout({
   return (
     <TaskProvider>
       <DashboardProvider>
-        <LayoutContent>{children}</LayoutContent>
+        <ProtectedRoute>
+          <LayoutContent>{children}</LayoutContent>
+        </ProtectedRoute>
       </DashboardProvider>
     </TaskProvider>
   );
