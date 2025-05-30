@@ -6,7 +6,7 @@
     "start:dev": "cross-env NODE_ENV=dev nodemon --watch src --exec ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "cross-env NODE_ENV=prod ts-node -r tsconfig-paths/register src/index.ts",
     "build": "tsc",
-    "start": "cross-env NODE_ENV=dev node dist/index.js"
+    "start": "cross-env NODE_ENV=prod node dist/index.js"
   },
   "keywords": [],
   "author": "",
