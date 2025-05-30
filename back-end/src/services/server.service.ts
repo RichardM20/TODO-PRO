@@ -1,9 +1,8 @@
-import "module-alias/register";
-
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application } from "express";
 import helmet from "helmet";
+import "module-alias/register";
 
 import connectDB from "@config/database.config";
 import ENV from "@config/env.config";
