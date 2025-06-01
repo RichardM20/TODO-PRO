@@ -1,12 +1,12 @@
 # TODO-PRO
 
 A simple and efficient task manager built with Next.js.
+For integration, it uses the API from the repository: [https://github.com/RichardM20/todopro-api](https://github.com/RichardM20/todopro-api).
 
 ## Features
 
 - Create, edit, and delete tasks
 - Intuitive and responsive interface
-- Real-time task saving
 
 ## Installation
 
