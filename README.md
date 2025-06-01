@@ -1,91 +1,36 @@
-# TODO-PRO 📝
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-**TODO-PRO** is a professional note-taking web application designed to help users organize their ideas, tasks, and projects efficiently. The app is structured with a clear separation between frontend and backend, ensuring scalability and maintainability.
+## Getting Started
 
----
-
-## ✨ Tech Stack
-
-### Frontend (`front-end` folder)
-
-- [Next.js](https://nextjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-
-### Backend (`back-end` folder)
-
-- [Node.js](https://nodejs.org/)
-- [Express](https://expressjs.com/)
-- [MongoDB](https://www.mongodb.com/)
-- [JWT Authentication](https://jwt.io/)
-
----
-
-## 📁 Project Structure
-
-```text
-TODO-PRO/
-├── back-end/
-│   └── src/
-│       ├── config/
-│       ├── controllers/
-│       ├── middlewares/
-│       ├── models/
-│       ├── routes/
-│       ├── schemas/
-│       ├── services/
-│       ├── types/
-│       ├── utils/
-│       ├── index.ts
-│       └── ...
-├── front-end/
-│   ├── public/
-│   └── src/
-│       ├── app/
-│       │   ├── dashboard/
-│       │   ├── login/
-│       │   ├── register/
-│       │   ├── globals.css
-│       │   ├── layout.tsx
-│       │   └── page.tsx
-│       ├── core/
-│       │   └── HttpServer.ts
-│       └── features/
-│           └── auth/
-│               ├── components/
-│               ├── hooks/
-│               └── services/
-└── ...
-```
-
-
-## 🚀 Getting Started
-
-### 1. Clone the repo
+First, run the development server:
 
 ```bash
-git clone https://github.com/your-username/todo-pro.git
-cd todo-pro
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-### 2. Install dependencies
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-npm install
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Run project
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### Backend
+## Learn More
 
-```bash
-cd back-end
-npm run start:dev
-```
+To learn more about Next.js, take a look at the following resources:
 
-### Frontend
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-```bash
-cd front-end
-npm run dev --turbopack
-```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
