@@ -6,13 +6,6 @@
   --font-inter: 'Inter', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 .ql-toolbar,
 .ql-container {
   border: none !important;
@@ -29,4 +22,5 @@
 
 body {
   font-family: var(--font-inter);
+  color-scheme: light;
 }
